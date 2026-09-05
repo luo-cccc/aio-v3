@@ -1,0 +1,6 @@
+# Generated release bundle and local runtime caches
+public/
+.tmp/
+
+# Rendered design-review evidence
+.impeccable/

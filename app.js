@@ -14,6 +14,7 @@
     ["home", "首页", "index.html"],
     ["guides", "PVP / GVG / PVE 攻略", "guides.html"],
     ["combos", "一键连招码", "combos.html"],
+    ["calculator", "属性计算", "calculator.html"],
     ["videos", "往期视频", "videos.html"],
     ["about", "关于 / 合作", "about.html"],
   ];
@@ -153,6 +154,10 @@
           <a class="dock-link" href="combos.html">
             <span class="dock-icon" aria-hidden="true">${icon("zap")}</span>
             <span class="dock-copy"><strong>一键连招码</strong><small>PVP / PVE 分类</small></span>
+          </a>
+          <a class="dock-link" href="calculator.html">
+            <span class="dock-icon" aria-hidden="true">${icon("calculator")}</span>
+            <span class="dock-copy"><strong>属性计算</strong><small>词条收益与伤害估算</small></span>
           </a>
           <a class="dock-link" href="#version-status">
             <span class="dock-icon" aria-hidden="true">${icon("clock-3")}</span>
@@ -491,6 +496,19 @@
       </div>
     </section>`;
 
+  const calculatorPage = () => {
+    const template = document.querySelector("#calculator-template");
+    return template?.innerHTML || `
+      <section class="page-hero" aria-labelledby="calculator-missing-title">
+        <div class="page-hero__layout">
+          <div>
+            <h1 id="calculator-missing-title" class="page-title">属性计算</h1>
+            <p>计算器内容暂未载入，请刷新页面后重试。</p>
+          </div>
+        </div>
+      </section>`;
+  };
+
   const renderPage = () => {
     document.querySelector("#site-header").innerHTML = headerTemplate();
     document.querySelector("#site-footer").innerHTML = footerTemplate();
@@ -500,6 +518,7 @@
       guidePvpGvg: () => guideArticlePage("field-manual"),
       guidePve: () => guideArticlePage("pve-notes"),
       combos: combosPage,
+      calculator: calculatorPage,
       videos: videosPage,
       about: aboutPage,
     };

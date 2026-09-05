@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#090a0a" />
+    <meta
+      name="description"
+      content="老洛MMO 属性计算器：对比词条收益、估算伤害，并支持技能系数反推与实测校准。"
+    />
+    <title>属性计算｜老洛MMO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="calculator.css" />
+    <script src="site-content.js"></script>
+    <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
+    <script defer src="app.js"></script>
+    <script defer src="calculator.js"></script>
+  </head>
+  <body class="calculator-page" data-page="calculator">
+    <a class="skip-link" href="#main-content">跳至主要内容</a>
+    <canvas class="scene-canvas" aria-hidden="true"></canvas>
+    <div class="scene-vignette" aria-hidden="true"></div>
+    <div id="site-header"></div>
+    <main id="main-content" tabindex="-1">
+      <noscript>
+        <section class="page-hero" aria-labelledby="calculator-static-title">
+          <div class="page-hero__layout">
+            <div>
+              <h1 id="calculator-static-title" class="page-title">属性计算</h1>
+              <p>该工具需要 JavaScript 才能根据你的面板属性实时计算。请启用 JavaScript 后重试。</p>
+            </div>
+          </div>
+        </section>
+      </noscript>
+    </main>
+    <div id="site-footer"></div>
+
+    <template id="calculator-template">
+      <section class="calculator-app" aria-labelledby="calculator-title">
+        <header class="calculator-masthead">
+          <div class="calculator-title-group">
+            <span class="calculator-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+            <div>
+              <h1 id="calculator-title">属性计算</h1>
+              <p>对比词条收益 · 估算伤害 · 校准技能系数</p>
+            </div>
+          </div>
+          <button type="button" class="calculator-button calculator-button--quiet" id="resetButton">重置输入</button>
+        </header>
+
+        <div class="calculator-intro">
+          <p>填入我方与目标属性后自动结算。默认的“属性收益比较”用于比较词条排序，不需要技能系数；要估算绝对伤害，请切换到“自定义技能系数”，再用说明数字或实测跳字反推。</p>
+          <a href="guides.html">先看配装与实战攻略</a>
+        </div>
+
+        <section class="calculator-mode-strip" aria-label="计算口径">
+          <label class="calculator-mode-field">
+            <span>计算口径</span>
+            <select id="damageAction">
+              <option value="attack-base" selected>属性收益比较（无需系数）</option>
+              <option value="custom">自定义技能系数</option>
+            </select>
+          </label>
+          <label class="calculator-mode-field">
+            <span>目标类型</span>
+            <select id="targetType">
+              <option value="normal">普通怪物</option>
+              <option value="elite" selected>精英</option>
+              <option value="boss">首领</option>
+              <option value="player">玩家</option>
+              <option value="building">建筑</option>
+            </select>
+          </label>
+          <label class="calculator-mode-field">
+            <span>攻击方等级</span>
+            <input id="sourceLevel" type="number" min="1" max="100" value="68" inputmode="numeric" />
+          </label>
+          <label class="calculator-mode-field">
+            <span>目标等级</span>
+            <input id="targetLevel" type="number" min="1" max="100" value="71" inputmode="numeric" />
+          </label>
+          <div class="calculator-combat-readout" aria-live="polite">
+            <span>结算战斗等级</span>
+            <strong id="combatLevelValue">17</strong>
+            <small id="combatLevelReason">min(17, 20)</small>
+          </div>
+        </section>
+
+        <section class="calculator-bench" aria-label="属性计算表单与结果">
+          <form class="calculator-panel calculator-panel--source" id="sourceForm" autocomplete="off">
+            <div class="calculator-panel-head"><h2>我的属性</h2></div>
+
+            <fieldset>
+              <legend>攻击</legend>
+              <div class="calculator-grid calculator-grid--two">
+                <label class="calculator-number"><span>攻击下限</span><input id="sourceAttackMin" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>攻击上限</span><input id="sourceAttackMax" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>破甲</span><input id="sourceArmorBreak" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span id="sourceSpecializationLabel">精英怪物专攻</span><input id="sourceSpecialization" type="number" value="0" inputmode="decimal" /></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>穿甲与破防</legend>
+              <div class="calculator-grid calculator-grid--two">
+                <label class="calculator-number"><span>固定破防</span><input id="sourceBreakFlat" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>忽视防御</span><span class="calculator-suffix"><input id="sourceBreakPercent" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>物理穿刺</span><input id="sourcePierce" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>暴击</span><input id="sourceCrit" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>暴伤</span><span class="calculator-suffix"><input id="sourceCritDamage" type="number" step="0.1" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>最终伤害增强</span><input id="sourceFinalBonus" type="number" value="0" inputmode="decimal" /></label>
+              </div>
+            </fieldset>
+
+            <details class="calculator-advanced">
+              <summary>高级：动作系数 / 额外乘区</summary>
+              <div class="calculator-grid calculator-grid--two">
+                <label class="calculator-number"><span>动作系数</span><input id="normalAttackCoefficient" type="number" step="0.0001" value="1" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>增伤</span><span class="calculator-suffix"><input id="sourceDamageIncrease" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>伤害加深</span><span class="calculator-suffix"><input id="sourceDamageDeepening" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span id="sourceSuppressionLabel">怪物压制</span><span class="calculator-suffix"><input id="sourceSuppression" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>连击加成</span><span class="calculator-suffix"><input id="comboBonus" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+              </div>
+
+              <div class="calculator-skill-block">
+                <label class="calculator-check"><input id="includeSkillLevelPart" type="checkbox" /><i aria-hidden="true"></i><span>技能等级项（平A吃技能增强时开启）</span></label>
+                <div class="calculator-grid calculator-grid--two">
+                  <label class="calculator-number"><span>技能等级</span><input id="sourceSkillLevel" type="number" value="0" inputmode="decimal" /></label>
+                  <label class="calculator-number"><span>技能增强</span><input id="sourceSkillEnhancement" type="number" value="0" inputmode="decimal" /></label>
+                </div>
+              </div>
+
+              <div class="calculator-derive-wrap">
+                <div class="calculator-derive">
+                  <label class="calculator-number"><span>技能说明面板数字</span><input id="tooltipNumber" type="number" value="0" inputmode="decimal" /></label>
+                  <label class="calculator-number"><span>反推动作系数</span><span class="calculator-suffix"><input id="derivedCoefficient" type="number" step="0.000001" value="0" inputmode="decimal" readonly /><b>x</b></span></label>
+                  <button type="button" class="calculator-button calculator-button--apply" id="applyCoefficient">采用</button>
+                  <p>方式一：填技能说明面板上显示的数字，自动得出系数（= 说明数字 ÷（攻击中点 + 120 × 技能等级））。多段请逐段填。</p>
+                </div>
+                <div class="calculator-derive">
+                  <label class="calculator-number"><span>实测普通命中伤害</span><input id="observedHit" type="number" value="0" inputmode="decimal" /></label>
+                  <label class="calculator-number"><span>校准动作系数</span><span class="calculator-suffix"><input id="calibratedCoefficient" type="number" step="0.000001" value="0" inputmode="decimal" readonly /><b>x</b></span></label>
+                  <button type="button" class="calculator-button calculator-button--apply" id="applyCalibrated">采用</button>
+                  <p>方式二：填一份“普通命中（未暴击 / 未格挡）”的实测伤害，自动反推技能系数。</p>
+                </div>
+              </div>
+            </details>
+          </form>
+
+          <section class="calculator-panel calculator-panel--result" aria-labelledby="resultTitle" aria-live="polite">
+            <div class="calculator-panel-head">
+              <h2 id="resultTitle">结果</h2>
+              <span class="calculator-chip" id="actionChip">属性收益比较</span>
+            </div>
+
+            <p class="calculator-route" id="damageRoute">我 → 目标（精英）</p>
+            <div class="calculator-hero-result">
+              <span id="expectedLabel">期望伤害（未取整）</span>
+              <strong id="expectedDamage">0</strong>
+              <small id="damageRange">攻击区间中点 · 属性收益比较</small>
+            </div>
+            <p class="calculator-meaning" id="resultMeaning">用于比较词条“哪个更赚”，不代表某一次跳字。</p>
+
+            <div class="calculator-outcomes">
+              <article class="calculator-outcome calculator-outcome--normal"><span>普通</span><strong id="normalDamage">0</strong><small id="normalJump">跳字 0</small><b id="normalChance">待验证</b></article>
+              <article class="calculator-outcome calculator-outcome--critical"><span>暴击</span><strong id="criticalDamage">0</strong><small id="criticalJump">跳字 0</small><b id="criticalChance">待验证</b></article>
+              <article class="calculator-outcome calculator-outcome--blocked"><span>格挡</span><strong id="blockedDamage">0</strong><small id="blockJump">跳字 0</small><b id="blockChance">待验证</b></article>
+            </div>
+          </section>
+
+          <form class="calculator-panel calculator-panel--target" id="targetForm" autocomplete="off">
+            <div class="calculator-panel-head"><h2>目标属性</h2></div>
+
+            <fieldset>
+              <legend>防御</legend>
+              <div class="calculator-grid calculator-grid--two">
+                <label class="calculator-number"><span>物理防御</span><input id="targetDefense" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>护甲</span><input id="targetArmor" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span id="targetSpecializationLabel">攻击者对应专防</span><input id="targetSpecializationDefense" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>最终伤害抵挡</span><input id="targetFinalResistance" type="number" value="0" inputmode="decimal" /></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>抵抗</legend>
+              <div class="calculator-grid calculator-grid--two">
+                <label class="calculator-number"><span>抗暴击</span><input id="targetAntiCrit" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>暴伤减免</span><span class="calculator-suffix"><input id="targetCritDamageReduction" type="number" step="0.1" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>格挡</span><input id="targetBlock" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span>减伤</span><span class="calculator-suffix"><input id="targetDamageReduction" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>伤害减免</span><span class="calculator-suffix"><input id="targetDamageMitigation" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>技能抵挡</span><input id="targetSkillResistance" type="number" value="0" inputmode="decimal" /></label>
+                <label class="calculator-number"><span id="targetResistanceLabel">怪物抵抗</span><span class="calculator-suffix"><input id="targetResistance" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+              </div>
+            </fieldset>
+
+            <details class="calculator-advanced">
+              <summary>高级：情境修正</summary>
+              <div class="calculator-grid calculator-grid--two">
+                <label class="calculator-number"><span>目标弱点</span><span class="calculator-suffix"><input id="targetWeakness" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>首领弱点</span><span class="calculator-suffix"><input id="targetBossWeakness" type="number" step="0.01" value="0" inputmode="decimal" /><b>%</b></span></label>
+                <label class="calculator-number"><span>攻击修正</span><span class="calculator-suffix"><input id="sourceAttackCorrection" type="number" step="0.01" value="1" inputmode="decimal" /><b>x</b></span></label>
+                <label class="calculator-number"><span>防御修正</span><span class="calculator-suffix"><input id="targetDefenseCorrection" type="number" step="0.01" value="1" inputmode="decimal" /><b>x</b></span></label>
+                <label class="calculator-number"><span>阵营基础倍率</span><span class="calculator-suffix"><input id="campBaseMultiplier" type="number" step="0.01" value="1" inputmode="decimal" /><b>x</b></span></label>
+              </div>
+              <p class="calculator-hint">“攻击修正 / 防御修正 / 首领弱点”针对怪物与首领的副本机制；目标为玩家或建筑时会自动忽略。</p>
+            </details>
+          </form>
+        </section>
+
+        <aside class="calculator-evidence" aria-label="计算边界说明">
+          <div>
+            <strong>使用边界</strong>
+            <a href="data/attribute-formulas.json" target="_blank" rel="noreferrer">查看公式依据</a>
+          </div>
+          <p>计算结果基于面板输入和现有伤害公式，用于比较与规划。期望伤害、条件分支伤害与游戏内最终生命扣除并不等同；带有待测机制的建筑、阵营倍率和中间取整，请以实测为准。</p>
+        </aside>
+        <p class="calculator-footnote" id="footnote">伤害 / 词条收益为按公式与面板输入的估算，具体以游戏内版本和实测结果为准。</p>
+      </section>
+    </template>
+  </body>
+</html>

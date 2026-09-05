@@ -7,8 +7,17 @@
 /app.js
   Cache-Control: public, max-age=3600
 
+/calculator.js
+  Cache-Control: public, max-age=3600
+
+/calculator.css
+  Cache-Control: public, max-age=3600
+
 /site-content.js
   Cache-Control: public, max-age=300
+
+/data/*.json
+  Cache-Control: public, max-age=3600
 
 /assets/*
   Cache-Control: public, max-age=86400, must-revalidate

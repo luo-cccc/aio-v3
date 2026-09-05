@@ -550,7 +550,7 @@ img {
 
 .hero-dock {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   width: 100%;
   min-height: 142px;
   border-top: 1px solid var(--line-strong);
@@ -1625,6 +1625,18 @@ img {
 @media (max-width: 1120px) {
   .site-nav {
     gap: 18px;
+  }
+
+  .hero-dock {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dock-link:nth-child(3) {
+    border-left: 0;
+  }
+
+  .dock-link:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
   }
 
   .hero__stage {

@@ -1,0 +1,561 @@
+{
+  "schemaVersion": "0.2.0",
+  "source": {
+    "capturedOn": "2026-09-05",
+    "title": "诡秘之主战斗数值公式整理（玩家版）",
+    "note": "由独立属性计算器迁入；发布版本已移除原始本机路径。"
+  },
+  "evidenceLevels": {
+    "formula": "资料直接给出公式",
+    "verified": "资料标记为录屏/数据支持",
+    "inference": "资料标记为推断，必须可切换",
+    "pending": "资料标记为待定或未确定",
+    "sample": "示例代入结果，不可推广",
+    "template": "离散配置表，不是函数"
+  },
+  "scope": {
+    "mode": "normal_physical_attack_no_active_skill",
+    "enabled": [
+      "attack_roll",
+      "armor_delta",
+      "specialization_delta",
+      "defense_multiplier",
+      "suppression_multiplier",
+      "increase_multiplier",
+      "deepening_multiplier",
+      "crit_rate",
+      "pierce_rate",
+      "event_multiplier",
+      "crit_multiplier",
+      "final_fixed_delta",
+      "damage_floor"
+    ],
+    "disabled": [
+      "active_skill_coefficient",
+      "active_skill_level",
+      "skill_base_value",
+      "healing",
+      "shield",
+      "control",
+      "auto_chess",
+      "life_ratio_damage",
+      "reflection",
+      "boss_counterattack"
+    ],
+    "pendingBranches": [
+      "normal_attack_skill_enhancement",
+      "normal_attack_coefficient",
+      "event_order"
+    ]
+  },
+  "combatLevelMap": {
+    "evidence": "formula",
+    "sourcePage": 5,
+    "entries": [
+      {
+        "characterLevel": "1-10",
+        "combatLevel": 1
+      },
+      {
+        "characterLevel": "11-29",
+        "combatLevel": 2
+      },
+      {
+        "characterLevel": "30-40",
+        "combatLevel": 3
+      },
+      {
+        "characterLevel": "41-44",
+        "combatLevel": 4
+      },
+      {
+        "characterLevel": "45-48",
+        "combatLevel": 5
+      },
+      {
+        "characterLevel": "49-53",
+        "combatLevel": 6
+      },
+      {
+        "characterLevel": "54-56",
+        "combatLevel": 7
+      },
+      {
+        "characterLevel": "57",
+        "combatLevel": 8
+      },
+      {
+        "characterLevel": "58-59",
+        "combatLevel": 9
+      },
+      {
+        "characterLevel": "60-61",
+        "combatLevel": 10
+      },
+      {
+        "characterLevel": "62",
+        "combatLevel": 11
+      },
+      {
+        "characterLevel": "63",
+        "combatLevel": 12
+      },
+      {
+        "characterLevel": "64",
+        "combatLevel": 13
+      },
+      {
+        "characterLevel": "65",
+        "combatLevel": 14
+      },
+      {
+        "characterLevel": "66",
+        "combatLevel": 15
+      },
+      {
+        "characterLevel": "67",
+        "combatLevel": 16
+      },
+      {
+        "characterLevel": "68",
+        "combatLevel": 17
+      },
+      {
+        "characterLevel": "69",
+        "combatLevel": 18
+      },
+      {
+        "characterLevel": "70",
+        "combatLevel": 19
+      },
+      {
+        "characterLevel": "71",
+        "combatLevel": 20
+      },
+      {
+        "characterLevel": "72",
+        "combatLevel": 20
+      },
+      {
+        "characterLevel": "73",
+        "combatLevel": 21
+      },
+      {
+        "characterLevel": "74-75",
+        "combatLevel": 22
+      },
+      {
+        "characterLevel": "76-77",
+        "combatLevel": 23
+      },
+      {
+        "characterLevel": "78-79",
+        "combatLevel": 24
+      },
+      {
+        "characterLevel": "80",
+        "combatLevel": 25
+      },
+      {
+        "characterLevel": "81-99",
+        "combatLevel": "26-44, each level +1"
+      },
+      {
+        "characterLevel": "100 (season 30)",
+        "combatLevel": 45
+      }
+    ],
+    "notes": [
+      "资料称伤害公式取攻防双方较小的战斗等级。",
+      "70级以上的赛季标记与角色等级不是同一字段；完整服务器映射仍应以实测或配置核对。"
+    ]
+  },
+  "formulas": {
+    "panel_final_value": {
+      "evidence": "formula",
+      "sourcePage": 4,
+      "expression": "baseValue * (1 + percentBonus) + fixedAddition",
+      "scope": "panel_composition_only",
+      "warning": "已有面板最终值时不可再次叠加其来源。"
+    },
+    "attack_roll": {
+      "evidence": "formula",
+      "sourcePage": 6,
+      "expression": "randomIntegerBetween(physicalAttackMin, physicalAttackMax)",
+      "notes": [
+        "面板攻击是区间中点，不是单次命中值。",
+        "资料声称多段技能各段独立随机；服务器是否严格均匀、端点是否包含仍待验证。"
+      ]
+    },
+    "armor_delta": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "variables": {
+        "P": "sourceArmorBreak",
+        "H": "targetArmor"
+      },
+      "piecewise": [
+        {
+          "when": "H <= P",
+          "expression": "(P - H) / 3"
+        },
+        {
+          "when": "P <= H / 4",
+          "expression": "2 * P - H"
+        },
+        {
+          "when": "otherwise",
+          "expression": "(P - H) * 2 / 3"
+        }
+      ],
+      "notes": [
+        "结果直接加到攻击随机值，可为小数和负数。",
+        "示例 P=108,H=146 得 -25.3。服务器中间取整位置仍待验证。"
+      ]
+    },
+    "specialization_delta": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "expression": "max(sourceSpecialization[targetType] - targetSpecializationDefense[sourceType], 0)",
+      "notes": [
+        "玩家打怪取怪物专攻子项，玩家打玩家取途径专攻子项；两者不可相加。",
+        "训练木桩在资料中按精英怪物处理。"
+      ]
+    },
+    "effective_defense": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "expression": "max(targetDefense - sourceBreakFlat, 0) * (1 - sourceBreakPercent)",
+      "notes": [
+        "固定破防先扣，百分比破防后乘。"
+      ]
+    },
+    "defense_reduction": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "expression": "clamp(effectiveDefense * 0.85 / (effectiveDefense + combatLevel * 31.68), 0.25, 0.80)"
+    },
+    "defense_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "expression": "1 - defenseReduction",
+      "range": [
+        0.2,
+        0.75
+      ]
+    },
+    "level_coefficient": {
+      "evidence": "formula",
+      "sourcePage": 9,
+      "expression": "1.12 * combatLevel when combatLevel <= 45; 0.48 * (combatLevel - 45) + 50.4 when combatLevel > 45"
+    },
+    "crit_rate": {
+      "evidence": "formula",
+      "sourcePage": 9,
+      "variables": {
+        "c": "sourceCrit - targetAntiCrit",
+        "k": "levelCoefficient"
+      },
+      "expression": "clamp((2 * c + 45 * k) / (c + 180 * k), 0.05, 0.75)",
+      "notes": [
+        "c=0时为25%；不可用角色面板的对空气暴击百分比替代实战概率。"
+      ]
+    },
+    "pierce_rate": {
+      "evidence": "formula",
+      "sourcePage": 10,
+      "variables": {
+        "r": "sourcePierce - targetBlock",
+        "k": "levelCoefficient"
+      },
+      "expression": "clamp((1.5 * r + 135 * k) / (r + 180 * k), 0.25, 1.0)"
+    },
+    "block_rate": {
+      "evidence": "formula",
+      "sourcePage": 10,
+      "expression": "1 - pierceRate",
+      "range": [
+        0,
+        0.75
+      ]
+    },
+    "event_multiplier": {
+      "evidence": "inference",
+      "sourcePage": 10,
+      "assumption": "block_then_crit",
+      "expression": "blockRate * 0.3 + (1 - blockRate) * critRate * critMultiplier + (1 - blockRate) * (1 - critRate)",
+      "notes": [
+        "资料明确标为推断，只与720次木桩统计相容。",
+        "格挡命中不暴击；最终伤害增强不受格挡影响。"
+      ]
+    },
+    "crit_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "clamp(sourceCritDamage - targetCritDamageReduction, 1.25, 2.5)",
+      "notes": [
+        "百分比输入应转为小数，例如154%=1.54。"
+      ]
+    },
+    "suppression_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "campBaseMultiplier * max(0, 1 + sourceSuppression - targetResistance)",
+      "pendingInput": "campBaseMultiplier"
+    },
+    "increase_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "max(0, 1 + comboBonus + sourceDamageIncrease - targetDamageReduction)"
+    },
+    "deepening_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "max(0, 1 + sourceDamageDeepening - targetDamageMitigation)",
+      "notes": [
+        "与增伤/减伤是不同的独立乘区。"
+      ]
+    },
+    "cross_type_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "max(0, 1 + sourceCrossTypeIncrease - targetCrossTypeImmunity)"
+    },
+    "weakness_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "1 + targetWeakness"
+    },
+    "monster_correction": {
+      "evidence": "formula",
+      "sourcePage": 8,
+      "expression": "(1 + targetBossWeakness) * sourceAttackCorrection * targetDefenseCorrection",
+      "notes": [
+        "没有目标情境数据时应禁用，不得默认为未知修正。"
+      ]
+    },
+    "final_fixed_delta": {
+      "evidence": "formula",
+      "sourcePage": 9,
+      "expression": "sourceFinalDamageBonus - targetFinalDamageResistance",
+      "position": "after_all_multiplications"
+    },
+    "damage_floor": {
+      "evidence": "formula",
+      "sourcePage": 9,
+      "expression": "max(resolvedDamage, baseDamage * 0.005, 1)",
+      "display": "round(finalDamage)",
+      "notes": [
+        "资料称先扣护盾，再扣生命；特殊固定/比例扣血可能绕过护盾。"
+      ]
+    },
+    "expected_damage": {
+      "evidence": "formula",
+      "sourcePage": 11,
+      "expression": "baseDamageAtAttackMidpoint * increaseMultiplier * deepeningMultiplier * suppressionMultiplier * eventMultiplier + finalFixedDelta",
+      "scope": "recommendation_and_relative_comparison",
+      "omits": [
+        "crossTypeMultiplier",
+        "weaknessMultiplier",
+        "targetCountCoefficient",
+        "monsterCorrection"
+      ],
+      "warning": "适合词条排序，不适合预测某一击数字。"
+    },
+    "result_semantics": {
+      "evidence": "formula",
+      "sourcePages": [
+        6,
+        11,
+        12,
+        15
+      ],
+      "definitions": {
+        "base_damage": "攻击随机值、破甲差、专攻差与防御倍率等完成后的基础层。",
+        "resolved_damage": "基础伤害经过适用乘区、事件倍率与最终固定项后的结算层。",
+        "single_final_damage": "max(结算伤害, 基础伤害 * 0.5%, 1)，可保留小数。",
+        "display_jump": "round(单次最终伤害)。",
+        "expected_damage": "用攻击区间中点与事件概率算出的长期比较模型；不代表单次跳字或实际生命扣除。",
+        "shield_and_health": "资料确认最终伤害先扣护盾、再扣生命，但未给出护盾吸收、溢出与取整的完整公式。"
+      },
+      "implementationRule": "界面必须把期望伤害、条件分支最终伤害、显示跳字、实测护盾损失与实测生命损失分开显示和记录。"
+    },
+    "skill_enhancement_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "expression": "clamp(1 + 0.025 * (sourceSkillEnhancement - targetSkillResistance) / combatLevel, 0.05, 2.5)",
+      "scope": "active_skill_only_until_normal_attack_test",
+      "notes": [
+        "第16页另有录屏支持条目称平A也吃技能增强，存在证据冲突。"
+      ]
+    },
+    "skill_level_part": {
+      "evidence": "formula",
+      "sourcePage": 7,
+      "expression": "skillCoefficient * skillLevel * 120 * skillEnhancementMultiplier",
+      "scope": "active_skill_only"
+    },
+    "skill_description_value": {
+      "evidence": "verified",
+      "sourcePage": 14,
+      "expression": "floor(skillCoefficient * (attackMidpoint + 120 * skillLevel))",
+      "scope": "skill_tooltip_display_only",
+      "notes": [
+        "不含随机、破甲、专攻、防御、技能增强和其他乘区。"
+      ]
+    },
+    "control_multiplier": {
+      "evidence": "formula",
+      "sourcePage": 16,
+      "expression": "clamp(1 + 2.5 * difference / (difference + 20 * levelCoefficient), 0.5, 2.0)",
+      "scope": "control_only"
+    }
+  },
+  "conflictsAndUnknowns": [
+    {
+      "id": "normal_attack_skill_enhancement",
+      "status": "pending",
+      "description": "第7页称技能增强只放大技能等级*120项；第16页称平A也吃技能增强，但没有平A系数或结算位置。"
+    },
+    {
+      "id": "event_order",
+      "status": "inference",
+      "description": "资料用先格挡后暴击解释统计，但明确标为推断。"
+    },
+    {
+      "id": "camp_base_multiplier",
+      "status": "pending",
+      "description": "阵营基础倍率表未恢复；木桩暂按1只是实验假设。"
+    },
+    {
+      "id": "combat_level_mapping",
+      "status": "pending",
+      "description": "部分赛季等级映射虽列出，但完整服务器映射及双方取较小值仍应实测。"
+    },
+    {
+      "id": "rounding",
+      "status": "pending",
+      "description": "资料支持最终显示四舍五入，但各中间步骤取整位置未完全确定。"
+    }
+  ],
+  "templateTables": [
+    {
+      "id": "standard_player_attack",
+      "sourcePages": [
+        17,
+        18
+      ],
+      "status": "template",
+      "columns": [
+        "level",
+        "attack",
+        "armorBreak",
+        "defenseBreak",
+        "defenseBreakPercent",
+        "skillEnhancement",
+        "crit",
+        "critDamage",
+        "pierce",
+        "damageIncrease",
+        "damageDeepening",
+        "finalDamageBonus",
+        "pathSpecialization"
+      ]
+    },
+    {
+      "id": "standard_player_defense",
+      "sourcePages": [
+        18,
+        19
+      ],
+      "status": "template",
+      "columns": [
+        "level",
+        "health",
+        "defense",
+        "armor",
+        "skillResistance",
+        "antiCrit",
+        "critDamageReduction",
+        "block",
+        "damageReduction",
+        "damageMitigation",
+        "finalDamageResistance",
+        "pathSpecializationDefense"
+      ]
+    },
+    {
+      "id": "standard_boss",
+      "sourcePages": [
+        19,
+        20,
+        21
+      ],
+      "status": "template",
+      "columns": [
+        "level",
+        "health",
+        "attack",
+        "armorBreak",
+        "defenseBreak",
+        "crit",
+        "critDamage",
+        "pierce",
+        "pathSpecialization",
+        "pathSuppression",
+        "defense",
+        "armor",
+        "block",
+        "antiCrit",
+        "critDamageReduction",
+        "skillResistance"
+      ],
+      "notes": [
+        "首领模板缺少的抗暴、减伤等项目按0显示；表中攻击/破甲是首领攻击玩家时使用的输入。"
+      ]
+    }
+  ],
+  "specialBranches": [
+    {
+      "id": "auto_chess",
+      "status": "disabled",
+      "sourcePage": 15,
+      "reason": "独立防御倍率与暴击随机，不得套用常规平A。"
+    },
+    {
+      "id": "life_ratio_damage",
+      "status": "disabled",
+      "sourcePage": 15
+    },
+    {
+      "id": "reflection",
+      "status": "disabled",
+      "sourcePage": 15
+    },
+    {
+      "id": "shield",
+      "status": "disabled",
+      "sourcePage": 15,
+      "notes": [
+        "吸收上限为目标最大生命35%；部分固定/比例扣血绕过护盾。"
+      ]
+    },
+    {
+      "id": "healing",
+      "status": "disabled",
+      "sourcePages": [
+        10,
+        15
+      ],
+      "notes": [
+        "用户已确认：游戏内治疗不会暴击。",
+        "资料第10页的“4.4 治疗暴击率”与游戏内事实冲突，标记为错误资料；不得实现或引用为候选公式。"
+      ]
+    },
+    {
+      "id": "equipment_generation",
+      "status": "input_helper_only",
+      "sourcePage": 16
+    }
+  ]
+}
