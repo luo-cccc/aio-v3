@@ -36,11 +36,13 @@ python -m http.server 4173 --bind 127.0.0.1
 
 ## 发布到 Cloudflare Pages
 
-发布包位于 `public/`，只包含网站运行所需的 HTML、CSS、JavaScript、`_headers`、公开的公式资料与 WebP 图片。不要上传项目根目录；根目录包含 Word 成品、原始截图和本地工作资料。
+发布包位于 `public/`，只包含网站运行所需的 HTML、CSS、JavaScript、`_headers`、公开的公式资料与 WebP 图片。不要上传项目根目录；根目录包含的 Word 成品、原始截图和设计资料已由 `.gitignore` 排除，不会进入版本库。
+
+项目使用 Git 仓库（origin：`https://github.com/luo-cccc/aio-v3.git`，默认分支 `master`）。
 
 1. 执行 `powershell -ExecutionPolicy Bypass -File .\scripts\build-public.ps1` 生成并校验发布包。
-2. 直接上传时，只将整个 `public/` 文件夹上传到 Cloudflare Pages；当前项目没有 Git 仓库，这是最简便的发布方式。
-3. 若未来改用 Git 自动部署，构建命令设为 `node scripts/build-public.mjs`，输出目录设为 `public`。
+2. Cloudflare Pages 的 Git 集成自动部署：生产分支设为 `master`，构建命令设为 `node scripts/build-public.mjs`，输出目录设为 `public`，Root directory 留空。
+3. 若采用 Direct Upload 手动上传：只将整个 `public/` 文件夹拖入 Cloudflare Pages。
 4. 发布后，在 Pages 的自定义域名设置中绑定你的域名。
 
 详细的部署选择、Cloudflare 配置和发布后检查见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布前核对：游戏官网版本或适用阶段、最后核验日期、平台和视频外链、图文/连招码关联入口，以及 `public/` 内不含源文档或临时文件。

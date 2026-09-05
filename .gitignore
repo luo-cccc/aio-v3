@@ -4,3 +4,10 @@ public/
 
 # Rendered design-review evidence
 .impeccable/
+
+# Local content source and design/planning working files (never upload to git)
+*.docx
+assets/*.png
+诡秘之主个人攻略网站当前方案.md
+DESIGN.md
+PRODUCT.md

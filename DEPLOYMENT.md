@@ -29,17 +29,17 @@ node .\scripts\build-public.mjs
 
 ## 部署方式
 
-### 直接上传（当前项目推荐）
+### 直接上传（手动，可作回退）
 
-项目目前没有 Git 仓库，直接上传最省事：在 Cloudflare Dashboard 的 **Workers & Pages** 中新建应用，选择 **Get started → Drag and drop your files**，将整个 `public/` 文件夹拖入后部署。
+项目已使用 Git 仓库（origin：`https://github.com/luo-cccc/aio-v3.git`，默认分支 `master`）。Direct Upload 仅作为手动回退：在 Cloudflare Dashboard 的 **Workers & Pages** 中新建应用，选择 **Get started → Drag and drop your files**，将整个 `public/` 文件夹拖入后部署。
 
 Cloudflare 的 Direct Upload 项目之后不能直接切换成 Git 集成；若你预计需要自动部署，请一开始采用 Git 方式并新建对应 Pages 项目。详见 [Cloudflare Direct Upload 文档](https://developers.cloudflare.com/pages/get-started/direct-upload/)。
 
-### Git 自动部署（未来可选）
+### Git 自动部署（推荐）
 
-若准备把本项目放入 GitHub / GitLab：
+项目已放在 GitHub（`https://github.com/luo-cccc/aio-v3.git`）：
 
-- Production branch：`main`
+- Production branch：`master`
 - Build command：`node scripts/build-public.mjs`
 - Build output directory：`public`
 - Root directory：留空（仓库根目录即本项目）
