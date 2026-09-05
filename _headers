@@ -2,22 +2,22 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /styles.css
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /app.js
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /calculator.js
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /calculator.css
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /site-content.js
-  Cache-Control: public, max-age=300
+  Cache-Control: public, max-age=0, must-revalidate
 
 /data/*.json
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
   Cache-Control: public, max-age=86400, must-revalidate
