@@ -34,6 +34,7 @@ const publishFiles = [
   "styles.css",
   "calculator.css",
   "_headers",
+  "robots.txt",
 ];
 
 const publishAssets = [

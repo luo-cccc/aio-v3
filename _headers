@@ -21,6 +21,7 @@
 
 /assets/*
   Cache-Control: public, max-age=86400, must-revalidate
+  Cross-Origin-Resource-Policy: same-site
 
 /*
   X-Content-Type-Options: nosniff

@@ -92,7 +92,7 @@
     <footer class="site-footer">
       <div class="footer-grid">
         <p>老洛MMO · 歌颂者实战档案</p>
-        <small>攻略、连招码与外链内容由老洛MMO持续维护。</small>
+        <small>攻略文字、配装整理、截图标注与计算器内容由老洛MMO持续维护；转载、镜像或商业使用请先取得授权并保留原文链接。</small>
       </div>
     </footer>`;
 

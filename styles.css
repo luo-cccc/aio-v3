@@ -1171,18 +1171,48 @@ img {
 }
 
 .article-figure {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   overflow: hidden;
   border: 1px solid var(--line);
   background: #080909;
 }
 
+.article-figure::after {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 28px);
+  padding: 7px 14px;
+  border: 1px solid rgba(247, 218, 166, 0.54);
+  border-radius: 999px;
+  background: rgba(9, 10, 10, 0.4);
+  color: rgba(255, 235, 196, 0.7);
+  content: "老洛MMO · zephyr-eyes.com";
+  font-family: "Noto Serif SC", "Songti SC", Georgia, serif;
+  font-size: clamp(11px, 1.85vw, 18px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  pointer-events: none;
+  text-align: center;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%) rotate(-8deg);
+  user-select: none;
+}
+
 .article-figure img {
+  display: block;
   width: 100%;
   height: auto;
 }
 
 .article-figure figcaption {
+  position: relative;
+  z-index: 2;
   padding: 11px 14px;
   border-top: 1px solid var(--line);
   color: var(--muted-warm);
