@@ -55,7 +55,7 @@
         </header>
 
         <div class="calculator-intro">
-          <p>填入我方与目标属性后自动结算。默认的“属性收益比较”用于比较词条排序，不需要技能系数；要估算绝对伤害，请切换到“自定义技能系数”，再用说明数字或实测跳字反推。</p>
+          <p>填入我方与目标属性 → 看结果。默认“属性收益比较”直接对比哪个词条更赚、无需技能系数；要算绝对伤害，选“自定义技能系数”后用方式一/二自动得出你的系数。多段技能逐段填。</p>
           <a href="guides.html">先看配装与实战攻略</a>
         </div>
 
@@ -129,11 +129,12 @@
               </div>
 
               <div class="calculator-skill-block">
-                <label class="calculator-check"><input id="includeSkillLevelPart" type="checkbox" /><i aria-hidden="true"></i><span>技能等级项（平A吃技能增强时开启）</span></label>
+                <label class="calculator-check"><input id="includeSkillLevelPart" type="checkbox" /><i aria-hidden="true"></i><span>技能等级项（含技能增强）</span></label>
                 <div class="calculator-grid calculator-grid--two">
                   <label class="calculator-number"><span>技能等级</span><input id="sourceSkillLevel" type="number" value="0" inputmode="decimal" /></label>
                   <label class="calculator-number"><span>技能增强</span><input id="sourceSkillEnhancement" type="number" value="0" inputmode="decimal" /></label>
                 </div>
+                <p class="calculator-hint">技能增强只放大“技能等级项”（技能系数 × 技能等级 × 120 × 技能增强倍率），普攻与技能都计入；若不加载技能则可不勾选。</p>
               </div>
 
               <div class="calculator-derive-wrap">
@@ -141,13 +142,13 @@
                   <label class="calculator-number"><span>技能说明面板数字</span><input id="tooltipNumber" type="number" value="0" inputmode="decimal" /></label>
                   <label class="calculator-number"><span>反推动作系数</span><span class="calculator-suffix"><input id="derivedCoefficient" type="number" step="0.000001" value="0" inputmode="decimal" readonly /><b>x</b></span></label>
                   <button type="button" class="calculator-button calculator-button--apply" id="applyCoefficient">采用</button>
-                  <p>方式一：填技能说明面板上显示的数字，自动得出系数（= 说明数字 ÷（攻击中点 + 120 × 技能等级））。多段请逐段填。</p>
+                  <p>方式一：填技能说明面板上显示的数字，自动得出系数（= 说明数字 ÷ (攻击中点 + 120×技能等级)）。多段逐段填。</p>
                 </div>
                 <div class="calculator-derive">
                   <label class="calculator-number"><span>实测普通命中伤害</span><input id="observedHit" type="number" value="0" inputmode="decimal" /></label>
                   <label class="calculator-number"><span>校准动作系数</span><span class="calculator-suffix"><input id="calibratedCoefficient" type="number" step="0.000001" value="0" inputmode="decimal" readonly /><b>x</b></span></label>
                   <button type="button" class="calculator-button calculator-button--apply" id="applyCalibrated">采用</button>
-                  <p>方式二：填一份“普通命中（未暴击 / 未格挡）”的实测伤害，自动反推技能系数。</p>
+                  <p>方式二：填你实际打出的一个“普通命中（未暴击/未格挡）”伤害，自动反推你的技能系数，无需知道它。</p>
                 </div>
               </div>
             </details>
@@ -209,7 +210,7 @@
                 <label class="calculator-number"><span>防御修正</span><span class="calculator-suffix"><input id="targetDefenseCorrection" type="number" step="0.01" value="1" inputmode="decimal" /><b>x</b></span></label>
                 <label class="calculator-number"><span>阵营基础倍率</span><span class="calculator-suffix"><input id="campBaseMultiplier" type="number" step="0.01" value="1" inputmode="decimal" /><b>x</b></span></label>
               </div>
-              <p class="calculator-hint">“攻击修正 / 防御修正 / 首领弱点”针对怪物与首领的副本机制；目标为玩家或建筑时会自动忽略。</p>
+              <p class="calculator-hint">“攻击修正 / 防御修正 / 首领弱点”是对怪物与首领的副本/首领机制修正；目标为玩家或建筑时自动忽略。</p>
             </details>
           </form>
         </section>
@@ -221,7 +222,7 @@
           </div>
           <p>计算结果基于面板输入和现有伤害公式，用于比较与规划。期望伤害、条件分支伤害与游戏内最终生命扣除并不等同；带有待测机制的建筑、阵营倍率和中间取整，请以实测为准。</p>
         </aside>
-        <p class="calculator-footnote" id="footnote">伤害 / 词条收益为按公式与面板输入的估算，具体以游戏内版本和实测结果为准。</p>
+        <p class="calculator-footnote" id="footnote">伤害/词条收益为按公式与面板输入的估算，用于对比与规划，具体以游戏内为准。</p>
       </section>
     </template>
   </body>
