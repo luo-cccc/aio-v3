@@ -34,8 +34,6 @@ let pendingManualCoefficient = "";
 let coefficientModeValue = "";
 const MAX_CALIBRATION_ATTACK_ROLLS = 10001;
 const MAX_COEFFICIENT_SEARCH = 1_000_000;
-const requiredInputIds = ["sourceAttackMin", "sourceAttackMax", "sourceLevel", "targetLevel", "sourceArmorBreak", "targetArmor", "targetDefense", "sourceBreakFlat"];
-const nonNegativeInputIds = ["sourceArmorBreak", "sourceSpecialization", "sourceBreakFlat", "sourceCrit", "sourceCritDamage", "sourcePierce", "sourceFinalBonus", "targetDefense", "targetArmor", "targetSpecializationDefense", "targetFinalResistance", "targetAntiCrit", "targetCritDamageReduction", "targetBlock"];
 
 function combatLevel(level) {
   const l = clamp(Math.round(level), 1, 100);
@@ -110,16 +108,17 @@ function validationIssues(state) {
   const issues = [];
   const nonFiniteFields = ids.filter((id) => {
     const field = element(id);
-    return field && field.type !== "checkbox" && field.tagName !== "SELECT" && field.tagName !== "TEXTAREA" && field.type !== "text" && field.value.trim() !== "" && !Number.isFinite(Number.parseFloat(field.value));
+    return field && field.type !== "checkbox" && field.tagName !== "SELECT" && field.tagName !== "TEXTAREA" && field.type !== "text" && !Number.isFinite(Number.parseFloat(field.value));
   });
   if (nonFiniteFields.length) issues.push("数值输入必须为有限数字");
-  requiredInputIds.forEach((id) => {
+  ["sourceAttackMin", "sourceAttackMax", "sourceLevel", "targetLevel", "sourceArmorBreak", "targetArmor", "targetDefense", "sourceBreakFlat"].forEach((id) => {
     if (rawFieldIsMissing(id)) issues.push(`“${element(id)?.previousElementSibling?.textContent || id}”不能为空`);
   });
   if (!Number.isInteger(state.sourceAttackMin) || !Number.isInteger(state.sourceAttackMax) || state.sourceAttackMin < 0 || state.sourceAttackMax < 0) issues.push("攻击区间必须是非负整数");
   if (state.sourceAttackMin > state.sourceAttackMax) issues.push("攻击下限不能大于攻击上限");
   if (!Number.isInteger(state.sourceLevel) || !Number.isInteger(state.targetLevel) || state.sourceLevel < 1 || state.sourceLevel > 100 || state.targetLevel < 1 || state.targetLevel > 100) issues.push("双方等级必须是 1–100 的整数");
-  if (nonNegativeInputIds.some((id) => state[id] < 0)) issues.push("攻击、防御、暴击、穿刺及固定点数属性不能为负数");
+  const nonNegativeFields = ["sourceArmorBreak", "sourceSpecialization", "sourceBreakFlat", "sourceCrit", "sourceCritDamage", "sourcePierce", "sourceFinalBonus", "targetDefense", "targetArmor", "targetSpecializationDefense", "targetFinalResistance", "targetAntiCrit", "targetCritDamageReduction", "targetBlock"];
+  if (nonNegativeFields.some((id) => state[id] < 0)) issues.push("攻击、防御、暴击、穿刺及固定点数属性不能为负数");
   if (state.sourceSkillEnhancement < 0 || state.targetSkillResistance < 0) issues.push("技能增强与技能抵挡不能为负数");
   if (state.sourceBreakPercent < 0 || state.sourceBreakPercent > 100) issues.push("忽视防御必须在 0%–100% 内");
   if (!Number.isInteger(state.actualTargetCount) || !Number.isInteger(state.fullDamageTargetCount) || state.actualTargetCount < 1 || state.fullDamageTargetCount < 1) issues.push("目标数必须是大于 0 的整数");
@@ -134,50 +133,6 @@ function validationIssues(state) {
   if (state.sourceCrit - state.targetAntiCrit + 180 * k <= 0) issues.push("暴击差使概率公式分母非正");
   if (state.sourcePierce - state.targetBlock + 180 * k <= 0) issues.push("穿刺差使概率公式分母非正");
   return [...new Set(issues)];
-}
-
-function syncValidationFields(state) {
-  const invalid = new Set();
-  const mark = (...fieldIds) => fieldIds.forEach((id) => invalid.add(id));
-  ids.forEach((id) => {
-    const field = element(id);
-    if (!field || field.type === "checkbox" || field.tagName === "SELECT" || field.tagName === "TEXTAREA" || field.type === "text") return;
-    if (field.value.trim() !== "" && !Number.isFinite(Number.parseFloat(field.value))) mark(id);
-  });
-  requiredInputIds.forEach((id) => { if (rawFieldIsMissing(id)) mark(id); });
-  if (!Number.isInteger(state.sourceAttackMin) || !Number.isInteger(state.sourceAttackMax) || state.sourceAttackMin < 0 || state.sourceAttackMax < 0 || state.sourceAttackMin > state.sourceAttackMax) mark("sourceAttackMin", "sourceAttackMax");
-  if (!Number.isInteger(state.sourceLevel) || !Number.isInteger(state.targetLevel) || state.sourceLevel < 1 || state.sourceLevel > 100 || state.targetLevel < 1 || state.targetLevel > 100) mark("sourceLevel", "targetLevel");
-  nonNegativeInputIds.filter((id) => state[id] < 0).forEach((id) => mark(id));
-  if (state.sourceSkillEnhancement < 0) mark("sourceSkillEnhancement");
-  if (state.targetSkillResistance < 0) mark("targetSkillResistance");
-  if (state.sourceBreakPercent < 0 || state.sourceBreakPercent > 100) mark("sourceBreakPercent");
-  if (!Number.isInteger(state.actualTargetCount) || state.actualTargetCount < 1) mark("actualTargetCount");
-  if (!Number.isInteger(state.fullDamageTargetCount) || state.fullDamageTargetCount < 1) mark("fullDamageTargetCount");
-  if (state.includeWeaknessMultiplier && state.targetWeakness < -100) mark("targetWeakness");
-  if (state.includeMonsterCorrection && state.targetBossWeakness < -100) mark("targetBossWeakness");
-  if (state.includeMonsterCorrection && state.sourceAttackCorrection < 0) mark("sourceAttackCorrection");
-  if (state.includeMonsterCorrection && state.targetDefenseCorrection < 0) mark("targetDefenseCorrection");
-  if (state.includeCampBaseMultiplier && state.campBaseMultiplier < 0) mark("campBaseMultiplier");
-  if (state.observedHit !== 0 && (!Number.isInteger(state.observedHit) || state.observedHit < 1)) mark("observedHit");
-  if (isCalibrationAction(state.damageAction) && hasProfile(state) && state.damageType !== "physical") mark("damageType");
-  if (isActionFormula(state.damageAction) && (!Number.isInteger(state.skillLevel) || state.skillLevel < 1)) mark("skillLevel");
-  const level = Math.min(combatLevel(state.sourceLevel), combatLevel(state.targetLevel));
-  const k = level > 45 ? 0.48 * (level - 45) + 50.4 : 1.12 * level;
-  if (state.sourceCrit - state.targetAntiCrit + 180 * k <= 0) mark("sourceCrit", "targetAntiCrit");
-  if (state.sourcePierce - state.targetBlock + 180 * k <= 0) mark("sourcePierce", "targetBlock");
-  ids.forEach((id) => {
-    const field = element(id);
-    if (!field) return;
-    const isInvalid = invalid.has(id);
-    field.classList.toggle("is-invalid", isInvalid);
-    if (isInvalid) {
-      field.setAttribute("aria-invalid", "true");
-      field.setAttribute("aria-describedby", "inputWarning");
-    } else {
-      field.removeAttribute("aria-invalid");
-      if (field.getAttribute("aria-describedby") === "inputWarning") field.removeAttribute("aria-describedby");
-    }
-  });
 }
 
 function profileKey(state) { return `${state.skillName}\u0000${state.skillSegment}`; }
@@ -581,7 +536,6 @@ function refresh({ flash = false } = {}) {
   syncState(state);
   updateCalibrationReadout(state);
   const issues = validationIssues(state);
-  syncValidationFields(state);
   element("inputWarning").textContent = issues.join("；");
   if (issues.length) {
     setOutcomesVisible(false);
