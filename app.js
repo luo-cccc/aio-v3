@@ -325,17 +325,14 @@
           <div class="article-body">${sections.map((section, index) => `
             <section class="article-section${index === 0 ? " article-section--opening" : ""}" id="${escapeHtml(section.id)}">
               <div class="article-section__heading"><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.lead)}</p></div>
-              <figure class="article-figure">
-                <img src="${escapeHtml(section.image)}" alt="${escapeHtml(section.imageAlt)}" width="1920" height="1080" loading="lazy" decoding="async" />
-                <figcaption>${escapeHtml(section.caption)}</figcaption>
-              </figure>
+              ${section.image ? `<figure class="article-figure"><img src="${escapeHtml(section.image)}" alt="${escapeHtml(section.imageAlt)}" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>${escapeHtml(section.caption)}</figcaption></figure>` : ""}
               <div class="article-copy">${(section.blocks || []).map((block) => `<h3>${escapeHtml(block.title)}</h3><p>${escapeHtml(block.text)}</p>`).join("")}</div>
             </section>`).join("")}
 
             <section class="article-section article-section--related" aria-labelledby="related-heading">
               <div class="article-section__heading">
                 <h2 id="related-heading">关联内容</h2>
-                <p>需要直接导入方案或回看实战时，可从这里继续。</p>
+                <p>${relatedVideos ? "需要直接导入方案或回看实战时，可从这里继续。" : "需要直接导入方案时，可从这里继续。"}</p>
               </div>
               <div class="article-relations">${relatedCombos}${relatedVideos}</div>
             </section>

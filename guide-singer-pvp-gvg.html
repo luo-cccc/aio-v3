@@ -4,18 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#090a0a" />
-    <meta name="description" content="老洛MMO歌颂者 PVP / GVG 配装、技能组、封印物、秘偶与非凡天赋图文攻略。" />
-    <title>歌颂者 PVP / GVG 配装与团队职责｜老洛MMO</title>
+    <meta name="description" content="老洛MMO歌颂者序列 8 PVP / GVG 天赋、装备、属性、技能组、封印物、秘偶与小号分支图文攻略。" />
+    <title>歌颂者序列 8 PVP GVG攻略｜老洛MMO</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260906.2" />
-    <script src="site-content.js?v=20260906.2"></script>
+    <link rel="stylesheet" href="styles.css?v=20260907.1" />
+    <script src="site-content.js?v=20260907.1"></script>
     <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
-    <script defer src="app.js?v=20260906.2"></script>
+    <script defer src="app.js?v=20260907.1"></script>
   </head>
   <body data-page="guidePvpGvg">
     <a class="skip-link" href="#main-content">跳至主要内容</a>
@@ -29,12 +29,12 @@
           <div class="article-hero__layout">
             <div>
               <ul class="tag-list" aria-label="内容标签"><li>PVP</li><li>GVG</li><li>图文攻略</li></ul>
-              <h1 id="fallback-article-title">歌颂者 PVP / GVG 配装与团队职责</h1>
-              <p>本篇按公测首月的 64装等三件套阶段整理。重点不是固定照搬，而是根据 6V6、GVG 与账号养成情况，在输出、功能和团队职责之间做取舍。</p>
+              <h1 id="fallback-article-title">歌颂者序列 8 PVP GVG攻略</h1>
+              <p>本攻略面向准备参与 PVP 与 GVG 的歌颂者序列 8 玩家，重点整理天赋、装备、属性、技能组、封印物和秘偶的选择。先按自身面板补齐短板，再根据战斗规模调整技能组。</p>
             </div>
             <dl class="article-ledger">
-              <div><dt>发布</dt><dd>2026年9月1日</dd></div>
-              <div><dt>适用</dt><dd>公测首月｜64装等三件套阶段</dd></div>
+              <div><dt>发布</dt><dd>2026年9月7日</dd></div>
+              <div><dt>适用</dt><dd>序列 8｜PVP / GVG</dd></div>
               <div><dt>定位</dt><dd>PVP / GVG</dd></div>
             </dl>
           </div>
@@ -42,40 +42,57 @@
         <div class="article-layout">
           <aside class="article-aside" aria-label="文章目录">
             <nav class="article-toc" aria-label="文章目录">
-              <a href="#fallback-setup">装备与属性</a>
-              <a href="#fallback-skills">技能组与团队职责</a>
-              <a href="#fallback-artifacts">封印物</a>
-              <a href="#fallback-marionettes">秘偶</a>
-              <a href="#fallback-talents">非凡天赋</a>
+              <a href="#fallback-talents">天赋点</a>
+              <a href="#fallback-equipment">装备选择</a>
+              <a href="#fallback-stats">属性与防御方向</a>
+              <a href="#fallback-skills">技能组</a>
+              <a href="#fallback-artifacts">封印物选择</a>
+              <a href="#fallback-marionettes">秘偶上阵</a>
+              <a href="#fallback-talent-switch">天赋切换</a>
+              <a href="#fallback-small-account">小号 GVG 分支</a>
             </nav>
           </aside>
           <div class="article-body">
-            <section class="article-section article-section--opening" id="fallback-setup">
-              <div class="article-section__heading"><h2>装备与属性</h2><p>先确定套装和基础属性，再根据自身养成决定继续堆输出，还是把资源留给团队功能。</p></div>
-              <figure class="article-figure"><img src="assets/singer-pvp-gvg-character.webp" alt="歌颂者 PVP 角色面板与装备方案截图" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原始配装截图：64 装等 PVP 三件套与角色属性面板。</figcaption></figure>
-              <div class="article-copy"><h3>三件套优先，遇到胸针冲突可先保两件</h3><p>64 装等开放三件套后，优先凑齐三件套效果。如果其中一件与胸针或红色胸针冲突，暂时只保留两件套也可以，先保证当前方案能稳定成型。</p><h3>属性按输出与生存分开看</h3><p>输出属性以穿刺、暴击、攻击为主。穿刺建议至少达到 1500，再继续补攻击和暴击。防御端以格挡为主，格挡越高，越能承担持续换血和拉扯中的压力。</p></div>
+            <section class="article-section article-section--opening" id="fallback-talents">
+              <div class="article-section__heading"><h2>天赋点</h2><p>先完成序列 8 的扮演任务，再按自身面板选择有效属性更多的天赋节点。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-01.webp" alt="歌颂者序列 8 非凡天赋界面截图，展示圣裁分支" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：序列 8 非凡天赋推荐方案。</figcaption></figure>
+              <div class="article-copy"><h3>先完成序列 8 扮演任务</h3><p>序列 8 开放后，先把序列 8 的扮演任务完成到 20%，拿够天赋点。当前阶段已经可以调整属性，不必再只看哪个节点分数高就带哪个。</p><h3>按面板短板选择节点</h3><p>点天赋前，先查看自身穿刺和格挡，优先补三项属性中更低的一项。还要注意目标属性在三个天赋节点中的排序：如果需要的属性排位较低，说明该节点提供的有效属性较少，换一个节点即可。</p></div>
+            </section>
+            <section class="article-section" id="fallback-equipment">
+              <div class="article-section__heading"><h2>装备选择</h2><p>64 装等阶段先把独珍三件套穿齐，再根据面板补关键属性。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-02.webp" alt="歌颂者序列 8 PVP 角色面板与装备方案截图" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：序列 8 PVP 角色面板与装备方案。</figcaption></figure>
+              <div class="article-copy"><h3>优先穿齐独珍三件套</h3><p>64 装等装备已经拿到不少时，优先把独珍三件套全部穿上，再根据自身面板补齐属性。装备选择的第一目标是让关键属性达标，不要为了单件装备的分数牺牲整体配置。</p></div>
+            </section>
+            <section class="article-section" id="fallback-stats">
+              <div class="article-section__heading"><h2>属性与防御方向</h2><p>圣光进化提高增伤，穿刺与格挡按面板短板补齐，先满足 PVP / GVG 的实战阈值。</p></div>
+              <div class="article-copy"><h3>圣光进化与增伤</h3><p>序列 8 开启圣光进化后，会获得额外 5% 增伤效果。暴击和穿刺的提升，会根据自身面板按比例放大，因此面板越高，进化带来的收益越明显。</p><h3>穿刺目标</h3><p>序列 8 打 PVP / GVG 不必把穿刺堆得过高，1800 以上即可；配合 buff 后，轻松达到约 2500，穿刺率可达到 80% 以上。</p><h3>格挡与技能抵挡</h3><p>今天开放衣服洗恩赐后，实战向防御可以优先寻找三个格挡和一个技能抵挡。只需要四金词条的玩家按这个方向凑齐即可；只需要三金的玩家同样优先选择格挡。</p></div>
             </section>
             <section class="article-section" id="fallback-skills">
-              <div class="article-section__heading"><h2>技能组与团队职责</h2><p>6V6 与 GVG 的技能选择不同，歌颂者的价值也不应只按个人输出计算。</p></div>
-              <figure class="article-figure"><img src="assets/singer-pvp-gvg-skills.webp" alt="歌颂者 PVP 技能组与封印物栏截图" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原始技能组截图：可参考 6V6 方案中的核心主动技能与封印物栏位。</figcaption></figure>
-              <div class="article-copy"><h3>逐日只作为 6V6 标配</h3><p>逐日可作为 6V6 的固定选择；其他 GVG 场景更建议替换为净化之斩。这样能把技能栏留给更符合团战节奏的功能。</p><h3>净化之斩的核心是阻断战复</h3><p>歌颂者具备净化尸体的能力，常被称为“烧尸体”。目标是阻止对方治疗职业通过战复迅速补回即时战力。势力战地图较大，被净化后从复活点重返前线需要时间，因此除了输出，也要主动关注残局里的尸体处理。</p><h3>养成不足时，优先做功能位</h3><p>人脉与秘偶技能当前优先考虑梦魇冲击和隐匿刺击。若技能等级暂时不够，人脉技能可换成蘑菇，隐匿刺击可换为控制技能。账号基础较弱时，比起硬追输出，更推荐多带控制、积极烧尸体，为团队创造收益。</p></div>
+              <div class="article-section__heading"><h2>技能组</h2><p>GVG 以净化之斩为默认思路，小规模场景再按队伍需求切换逐光或圣光。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-03.webp" alt="歌颂者 PVP 推荐方案技能页截图，展示净化之斩、逐光与圣光净化" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：歌颂者 PVP 推荐技能方案。</figcaption></figure>
+              <div class="article-copy"><h3>GVG 技能组</h3><p>GVG 默认可以携带净化之斩。6v6 或其他小规模场景可以改带逐光，但需要同步调整非凡天赋。12v12 可以携带圣光，6v6 同样可以使用，最终按队伍需求和个人熟练度选择。</p></div>
             </section>
             <section class="article-section" id="fallback-artifacts">
-              <div class="article-section__heading"><h2>封印物</h2><p>常规方案按攻击、防御和特化三条线选择；面具流属于需要操作支撑的变体。</p></div>
-              <figure class="article-figure"><img src="assets/singer-pvp-gvg-sealed-artifacts.webp" alt="歌颂者推荐封印物截图，包含幸运草、正义钱包和深红月冕" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原始封印物截图：常规推荐为幸运草、正义钱包与深红月冕。</figcaption></figure>
-              <div class="article-copy"><h3>常规搭配</h3><p>攻击封印物推荐幸运草；面具也可选择，但更依赖个人操作。防御封印物推荐正义钱包，特化封印物选择深红月冕。</p><h3>小号与 6V6 的替代思路</h3><p>养成较低时，攻击可带斧子，防御带纸人，特化带布偶。6V6 也可以沿用截图中的方案；另一套面具加神灯流兼顾爆发、技能刷新和保命，但更适合有愚者配合、能抵消神灯负面效果的队伍。</p></div>
+              <div class="article-section__heading"><h2>封印物选择</h2><p>特殊封印物优先神灯，攻击封印物再根据暴击与战斗规模调整。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-04.webp" alt="歌颂者封印物界面截图，展示攻击、防御与特化封印物方案" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：封印物推荐方案界面。</figcaption></figure>
+              <div class="article-copy"><h3>特殊封印物优先神灯</h3><p>特殊封印物优先推荐神灯，6v6 和 12v12 都很好用。当前战斗比较依赖 buff，因此神灯提供的技能刷新非常重要。</p><h3>攻击封印物按场景选择</h3><p>如果自身暴击较高，可以考虑公证书。6v6 场景也可以尝试斧子技能组，换下旋风斧；但暴风战斧容易让技能循环变得滞涩。GVG 场景推荐公证书与新焚决。</p></div>
             </section>
             <section class="article-section" id="fallback-marionettes">
-              <div class="article-section__heading"><h2>秘偶</h2><p>先确定上阵收益，再规划抽取顺序，避免把资源分散到短期难以使用的秘偶上。</p></div>
-              <figure class="article-figure"><img src="assets/singer-pvp-gvg-marionettes.webp" alt="歌颂者秘偶界面截图，展示剥面人与星之虫守秘" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原始秘偶截图：上阵选择剥面人与星之虫守秘。</figcaption></figure>
-              <div class="article-copy"><h3>上阵与抽取顺序</h3><p>上阵推荐剥面人与星之虫守秘，这两个组合可提供四攻。抽取优先考虑剥面人、星之虫守秘、异化赛琳娜；赛琳娜作为主要使用对象时，达到 20 阶后可解锁第三阶段。</p></div>
+              <div class="article-section__heading"><h2>秘偶上阵</h2><p>优先携带剥面人和头狼；破甲未达到目标时，改用星之虫守秘补足。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-05.webp" alt="歌颂者秘偶界面截图，展示头狼与剥面人上阵方案" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：秘偶上阵方案。</figcaption></figure>
+              <div class="article-copy"><h3>常规上阵</h3><p>当前优先携带剥面人和头狼。</p><h3>破甲不足时替换头狼</h3><p>如果自身破甲没有达到 300 左右，就把头狼替换为星之虫守秘。</p></div>
             </section>
-            <section class="article-section" id="fallback-talents">
-              <div class="article-section__heading"><h2>非凡天赋</h2><p>天赋选择以场景与账号能力为准，低养成时统一走更稳定的团队向配置。</p></div>
-              <figure class="article-figure"><img src="assets/singer-pvp-gvg-talents.webp" alt="歌颂者非凡天赋界面截图，展示领歌与圣裁分支" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原始非凡天赋截图：领歌为群伤辅助方向，圣裁为单体爆发方向。</figcaption></figure>
-              <div class="article-copy"><h3>6V6 带领歌，其余场景带圣裁</h3><p>6V6 可以统一带领歌；其他场景更建议选择圣裁。养成较低的账号则可以全部统一带领歌，以更稳定的功能收益参与团队。</p></div>
+            <section class="article-section" id="fallback-talent-switch">
+              <div class="article-section__heading"><h2>天赋切换</h2><p>技能组切换时同步调整非凡天赋，避免技能与天赋方向不一致。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-06.webp" alt="歌颂者非凡天赋净化分支界面截图" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：非凡天赋分支选择界面。</figcaption></figure>
+              <div class="article-copy"><h3>逐光需要同步调整天赋</h3><p>6v6 或小规模场景改带逐光时，需要同步调整非凡天赋；技能组与天赋方向保持一致，实战循环会更稳定。</p></div>
             </section>
-            <section class="article-section article-section--related" aria-labelledby="fallback-related-heading"><div class="article-section__heading"><h2 id="fallback-related-heading">关联内容</h2><p>需要直接导入方案或回看实战时，可从这里继续。</p></div><div class="article-relations"><a class="article-relation" href="combos.html#combo-pvp-combo-ready">一键连招码：歌颂者 PVP 连招码</a><a class="article-relation" href="https://www.bilibili.com/video/BV1Lyth6QE5X/" target="_blank" rel="noreferrer">哔哩哔哩实战视频（新窗口打开）</a><a class="article-relation" href="https://v.douyin.com/YLJ0pR7n-nM/" target="_blank" rel="noreferrer">抖音实战视频（新窗口打开）</a></div></section>
+            <section class="article-section" id="fallback-small-account">
+              <div class="article-section__heading"><h2>小号 GVG 分支</h2><p>序列 8 的新分支技能圣焰焚净，为小号玩家提供更容易成型的 GVG 方案。</p></div>
+              <figure class="article-figure"><img src="assets/singer-sequence8-pvp-gvg-07.webp" alt="歌颂者 PVP 推荐方案技能页截图，展示圣焰焚净技能" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>原攻略配图：小号 GVG 的圣焰焚净技能组。</figcaption></figure>
+              <div class="article-copy"><h3>圣焰焚净降低成型门槛</h3><p>序列 8 开放了新的分支技能圣焰焚净。对于装备和属性还在成长中的小号玩家，这是 GVG 场景里的关键技能，可以降低对无暗和净化之斩的依赖，直接参与实体灼烧。</p><h3>以圣焰焚净为核心调整技能组</h3><p>技能组以圣焰焚净为核心，搭配辅助和控制技能。如果自身不容易存活，可以把旋风斧替换成盔甲。其余封印物和秘偶的选择，沿用上文的通用思路即可。</p></div>
+            </section>
+            <section class="article-section article-section--related" aria-labelledby="fallback-related-heading"><div class="article-section__heading"><h2 id="fallback-related-heading">关联内容</h2><p>需要直接导入方案时，可从这里继续。本篇暂不关联视频。</p></div><div class="article-relations"><a class="article-relation" href="combos.html#combo-pvp-combo-ready">一键连招码：歌颂者 PVP 连招码</a></div></section>
           </div>
         </div>
       </article>
