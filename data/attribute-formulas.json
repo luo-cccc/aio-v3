@@ -1,10 +1,9 @@
 {
-  "schemaVersion": "0.3.0",
+  "schemaVersion": "0.2.0",
   "source": {
-    "directory": "C:\\Users\\Msi\\Desktop\\属性",
-    "document": "C:\\Users\\Msi\\Documents\\词条.docx",
     "capturedOn": "2026-09-05",
-    "title": "诡秘之主战斗数值公式整理（玩家版）"
+    "title": "诡秘之主战斗数值公式整理（玩家版）",
+    "note": "由独立属性计算器迁入；发布版本已移除原始本机路径。"
   },
   "evidenceLevels": {
     "formula": "资料直接给出公式",
@@ -12,47 +11,29 @@
     "inference": "资料标记为推断，必须可切换",
     "pending": "资料标记为待定或未确定",
     "sample": "示例代入结果，不可推广",
-    "template": "离散配置表，不是函数",
-    "derived": "由多条直接公式组合出的计算定义，不代表资料单独证实了该展示口径",
-    "empirical": "同一动作、同一命中段、同一快照下由实测跳字反解的经验值；不可推广为游戏内部公式"
+    "template": "离散配置表，不是函数"
   },
   "scope": {
-    "mode": "physical_damage_core_and_snapshot_action_calibration",
-    "description": "本配置区分可复用的物理伤害主链、条件乘区、同一动作/命中段/完整快照下的经验校准，以及2.2交付版的动作公式边界。",
+    "mode": "normal_physical_attack_no_active_skill",
     "enabled": [
       "attack_roll",
       "armor_delta",
       "specialization_delta",
-      "effective_defense",
-      "defense_reduction",
       "defense_multiplier",
       "suppression_multiplier",
       "increase_multiplier",
       "deepening_multiplier",
       "crit_rate",
       "pierce_rate",
+      "event_multiplier",
       "crit_multiplier",
       "final_fixed_delta",
-      "damage_floor",
-      "recommended_expected_damage",
-      "single_hit_expectation"
-    ],
-    "conditional": [
-      "cross_type_multiplier",
-      "weakness_multiplier",
-      "monster_correction",
-      "target_count_coefficient",
-      "skill_enhancement_multiplier",
-      "skill_level_part"
-    ],
-    "empiricalModes": [
-      "snapshot_action_empirical_calibration",
-      "action_formula_delivery_2_2"
+      "damage_floor"
     ],
     "disabled": [
-      "generic_active_skill_internal_coefficient",
-      "generic_active_skill_level_formula",
-      "generic_skill_description_to_coefficient_inference",
+      "active_skill_coefficient",
+      "active_skill_level",
+      "skill_base_value",
       "healing",
       "shield",
       "control",
@@ -63,58 +44,130 @@
     ],
     "pendingBranches": [
       "normal_attack_skill_enhancement",
-      "generic_normal_attack_coefficient",
-      "event_order",
-      "camp_base_multiplier",
-      "action_full_damage_target_count_metadata",
-      "building_damage_rules",
-      "intermediate_rounding"
+      "normal_attack_coefficient",
+      "event_order"
     ]
-  },
-  "runtimeContract": {
-    "recommendedComparison": "属性收益比较只能使用 recommended_expected_damage 的省略项口径；它不是单次跳字预测。",
-    "absoluteSnapshot": "带明确普通/暴击/格挡标签的绝对分支可在已记录攻防快照和用户标注的动作/命中段下分别输出；概率加权输出才必须选择事件策略。条件乘区缺数据时必须显示为未建模或禁用，不能静默以 1 替代未知事实。",
-    "actionFormulaDelivery": "2.2交付版在完整动作结算中启用技能增强倍率与技能等级项；要求动作/命中段、技能等级、动作系数、技能增强、技能抵挡和全部适用条件层输入。动作系数只对当前完整快照有效，不跨动作或场景推广。",
-    "calibration": "反推系数必须逐个攻击随机整数和事件分支调用完整最终结算函数，再取所有实测样本可行集合的交集；不得用 observedDamage 除以单一单位伤害近似。",
-    "invalidOutput": "输入越出已知定义域、事件未识别、建筑规则未确认或关键条件乘区未知时，绝对跳字和经验校准必须标为不可用，而不是伪造数值。"
   },
   "combatLevelMap": {
     "evidence": "formula",
-    "status": "source_transcription_partial_runtime_validation",
     "sourcePage": 5,
     "entries": [
-      {"characterLevel": "1-10", "combatLevel": 1},
-      {"characterLevel": "11-29", "combatLevel": 2},
-      {"characterLevel": "30-40", "combatLevel": 3},
-      {"characterLevel": "41-44", "combatLevel": 4},
-      {"characterLevel": "45-48", "combatLevel": 5},
-      {"characterLevel": "49-53", "combatLevel": 6},
-      {"characterLevel": "54-56", "combatLevel": 7},
-      {"characterLevel": "57", "combatLevel": 8},
-      {"characterLevel": "58-59", "combatLevel": 9},
-      {"characterLevel": "60-61", "combatLevel": 10},
-      {"characterLevel": "62", "combatLevel": 11},
-      {"characterLevel": "63", "combatLevel": 12},
-      {"characterLevel": "64", "combatLevel": 13},
-      {"characterLevel": "65", "combatLevel": 14},
-      {"characterLevel": "66", "combatLevel": 15},
-      {"characterLevel": "67", "combatLevel": 16},
-      {"characterLevel": "68", "combatLevel": 17},
-      {"characterLevel": "69", "combatLevel": 18},
-      {"characterLevel": "70", "combatLevel": 19},
-      {"characterLevel": "71", "combatLevel": 20},
-      {"characterLevel": "72", "combatLevel": 20},
-      {"characterLevel": "73", "combatLevel": 21},
-      {"characterLevel": "74-75", "combatLevel": 22},
-      {"characterLevel": "76-77", "combatLevel": 23},
-      {"characterLevel": "78-79", "combatLevel": 24},
-      {"characterLevel": "80", "combatLevel": 25},
-      {"characterLevel": "81-99", "combatLevel": "26-44, each level +1"},
-      {"characterLevel": "100 (season 30)", "combatLevel": 45}
+      {
+        "characterLevel": "1-10",
+        "combatLevel": 1
+      },
+      {
+        "characterLevel": "11-29",
+        "combatLevel": 2
+      },
+      {
+        "characterLevel": "30-40",
+        "combatLevel": 3
+      },
+      {
+        "characterLevel": "41-44",
+        "combatLevel": 4
+      },
+      {
+        "characterLevel": "45-48",
+        "combatLevel": 5
+      },
+      {
+        "characterLevel": "49-53",
+        "combatLevel": 6
+      },
+      {
+        "characterLevel": "54-56",
+        "combatLevel": 7
+      },
+      {
+        "characterLevel": "57",
+        "combatLevel": 8
+      },
+      {
+        "characterLevel": "58-59",
+        "combatLevel": 9
+      },
+      {
+        "characterLevel": "60-61",
+        "combatLevel": 10
+      },
+      {
+        "characterLevel": "62",
+        "combatLevel": 11
+      },
+      {
+        "characterLevel": "63",
+        "combatLevel": 12
+      },
+      {
+        "characterLevel": "64",
+        "combatLevel": 13
+      },
+      {
+        "characterLevel": "65",
+        "combatLevel": 14
+      },
+      {
+        "characterLevel": "66",
+        "combatLevel": 15
+      },
+      {
+        "characterLevel": "67",
+        "combatLevel": 16
+      },
+      {
+        "characterLevel": "68",
+        "combatLevel": 17
+      },
+      {
+        "characterLevel": "69",
+        "combatLevel": 18
+      },
+      {
+        "characterLevel": "70",
+        "combatLevel": 19
+      },
+      {
+        "characterLevel": "71",
+        "combatLevel": 20
+      },
+      {
+        "characterLevel": "72",
+        "combatLevel": 20
+      },
+      {
+        "characterLevel": "73",
+        "combatLevel": 21
+      },
+      {
+        "characterLevel": "74-75",
+        "combatLevel": 22
+      },
+      {
+        "characterLevel": "76-77",
+        "combatLevel": 23
+      },
+      {
+        "characterLevel": "78-79",
+        "combatLevel": 24
+      },
+      {
+        "characterLevel": "80",
+        "combatLevel": 25
+      },
+      {
+        "characterLevel": "81-99",
+        "combatLevel": "26-44, each level +1"
+      },
+      {
+        "characterLevel": "100 (season 30)",
+        "combatLevel": 45
+      }
     ],
     "notes": [
-      "资料给出此映射并称伤害公式取攻防双方较小的战斗等级；这表示资料来源等级，不表示整张服务器映射已经产品实测确认。",
-      "当前 PVP 记录中双方69级→战斗等级18与该表一致；70级以上的赛季标记与角色等级不是同一字段，完整服务器映射及双方取较小值仍应以实测或配置核对。"
+      "资料称伤害公式取攻防双方较小的战斗等级。",
+      "70级以上的赛季标记与角色等级不是同一字段；完整服务器映射仍应以实测或配置核对。"
     ]
   },
   "formulas": {
@@ -128,26 +181,32 @@
     "attack_roll": {
       "evidence": "formula",
       "sourcePage": 6,
-      "expression": "randomIntegerInDocumentedAttackRange(physicalAttackMin, physicalAttackMax)",
-      "inputDomain": "physicalAttackMin and physicalAttackMax are finite integers and physicalAttackMin <= physicalAttackMax",
-      "workingAssumptions": {
-        "endpointsIncluded": {"value": true, "status": "pending_server_validation"},
-        "distribution": {"value": "uniform", "status": "pending_server_validation"}
-      },
+      "expression": "randomIntegerBetween(physicalAttackMin, physicalAttackMax)",
       "notes": [
         "面板攻击是区间中点，不是单次命中值。",
-        "资料声称多段技能各段独立随机；服务器是否严格均匀、端点是否包含仍待验证。当前整数枚举把两端包含作为工作假设，不能称为服务器已证实行为。",
-        "攻击中点只能用于推荐期望或中点分支估算；校准一条实测跳字时必须枚举区间内的整数攻击值，不能把连续端点当作服务器跳字。"
+        "资料声称多段技能各段独立随机；服务器是否严格均匀、端点是否包含仍待验证。"
       ]
     },
     "armor_delta": {
       "evidence": "formula",
       "sourcePage": 7,
-      "variables": {"P": "sourceArmorBreak", "H": "targetArmor"},
+      "variables": {
+        "P": "sourceArmorBreak",
+        "H": "targetArmor"
+      },
       "piecewise": [
-        {"when": "H <= P", "expression": "(P - H) / 3"},
-        {"when": "P <= H / 4", "expression": "2 * P - H"},
-        {"when": "otherwise", "expression": "(P - H) * 2 / 3"}
+        {
+          "when": "H <= P",
+          "expression": "(P - H) / 3"
+        },
+        {
+          "when": "P <= H / 4",
+          "expression": "2 * P - H"
+        },
+        {
+          "when": "otherwise",
+          "expression": "(P - H) * 2 / 3"
+        }
       ],
       "notes": [
         "结果直接加到攻击随机值，可为小数和负数。",
@@ -167,8 +226,9 @@
       "evidence": "formula",
       "sourcePage": 7,
       "expression": "max(targetDefense - sourceBreakFlat, 0) * (1 - sourceBreakPercent)",
-      "inputDomain": "0 <= sourceBreakPercent <= 1",
-      "notes": ["固定破防先扣，百分比破防后乘。百分比忽防超出 0%–100% 时不属于本模型已验证定义域。"]
+      "notes": [
+        "固定破防先扣，百分比破防后乘。"
+      ]
     },
     "defense_reduction": {
       "evidence": "formula",
@@ -179,7 +239,10 @@
       "evidence": "formula",
       "sourcePage": 7,
       "expression": "1 - defenseReduction",
-      "range": [0.20, 0.75]
+      "range": [
+        0.2,
+        0.75
+      ]
     },
     "level_coefficient": {
       "evidence": "formula",
@@ -189,51 +252,56 @@
     "crit_rate": {
       "evidence": "formula",
       "sourcePage": 9,
-      "variables": {"c": "sourceCrit - targetAntiCrit", "k": "levelCoefficient"},
+      "variables": {
+        "c": "sourceCrit - targetAntiCrit",
+        "k": "levelCoefficient"
+      },
       "expression": "clamp((2 * c + 45 * k) / (c + 180 * k), 0.05, 0.75)",
-      "inputDomain": "combatLevel > 0 and c + 180 * k > 0",
-      "notes": ["c=0时为25%；不可用角色面板的对空气暴击百分比替代实战概率。分母非正时，资料未定义该函数；不得在 clamp 后伪装成有效概率。"]
+      "notes": [
+        "c=0时为25%；不可用角色面板的对空气暴击百分比替代实战概率。"
+      ]
     },
     "pierce_rate": {
       "evidence": "formula",
       "sourcePage": 10,
-      "variables": {"r": "sourcePierce - targetBlock", "k": "levelCoefficient"},
-      "expression": "clamp((1.5 * r + 135 * k) / (r + 180 * k), 0.25, 1.0)",
-      "inputDomain": "combatLevel > 0 and r + 180 * k > 0",
-      "notes": ["分母非正时，资料未定义该函数；不得在 clamp 后伪装成有效概率。"]
+      "variables": {
+        "r": "sourcePierce - targetBlock",
+        "k": "levelCoefficient"
+      },
+      "expression": "clamp((1.5 * r + 135 * k) / (r + 180 * k), 0.25, 1.0)"
     },
     "block_rate": {
       "evidence": "formula",
       "sourcePage": 10,
       "expression": "1 - pierceRate",
-      "range": [0.0, 0.75]
+      "range": [
+        0,
+        0.75
+      ]
     },
     "event_multiplier": {
       "evidence": "inference",
       "sourcePage": 10,
       "assumption": "block_then_crit",
       "expression": "blockRate * 0.3 + (1 - blockRate) * critRate * critMultiplier + (1 - blockRate) * (1 - critRate)",
-      "requiresExplicitStrategy": true,
-      "allowedUses": ["probability_weighted_estimate"],
-      "disallowedUses": ["claiming_confirmed_server_event_order", "inferring_an_unlabelled_observed_event"],
       "notes": [
         "资料明确标为推断，只与720次木桩统计相容。",
-        "格挡命中不暴击；最终伤害增强不受格挡影响。",
-        "必须让用户看见并选择该推断策略；策略未选择时，概率加权输出不可用。普通/暴击/格挡已有明确实测标签时，可分别校准分支，但不因此证实事件顺序。"
+        "格挡命中不暴击；最终伤害增强不受格挡影响。"
       ]
     },
     "crit_multiplier": {
       "evidence": "formula",
       "sourcePage": 8,
       "expression": "clamp(sourceCritDamage - targetCritDamageReduction, 1.25, 2.5)",
-      "notes": ["百分比输入应转为小数，例如154%=1.54。"]
+      "notes": [
+        "百分比输入应转为小数，例如154%=1.54。"
+      ]
     },
     "suppression_multiplier": {
       "evidence": "formula",
       "sourcePage": 8,
       "expression": "campBaseMultiplier * max(0, 1 + sourceSuppression - targetResistance)",
-      "pendingInput": "campBaseMultiplier",
-      "notes": ["阵营基础倍率未恢复时，1x 只能作为显式实验假设，不能作为未知事实的默认值。"]
+      "pendingInput": "campBaseMultiplier"
     },
     "increase_multiplier": {
       "evidence": "formula",
@@ -244,28 +312,27 @@
       "evidence": "formula",
       "sourcePage": 8,
       "expression": "max(0, 1 + sourceDamageDeepening - targetDamageMitigation)",
-      "notes": ["与增伤/减伤是不同的独立乘区。"]
+      "notes": [
+        "与增伤/减伤是不同的独立乘区。"
+      ]
     },
     "cross_type_multiplier": {
       "evidence": "formula",
       "sourcePage": 8,
-      "expression": "max(0, 1 + sourceCrossTypeIncrease - targetCrossTypeImmunity)",
-      "inputRequirements": ["sourceCrossTypeIncrease", "targetCrossTypeImmunity", "damageTypeAndTargetClass"],
-      "notes": ["没有跨类关系和双方对应输入时，该乘区是未建模，不得静默当作已知 1x。"]
+      "expression": "max(0, 1 + sourceCrossTypeIncrease - targetCrossTypeImmunity)"
     },
     "weakness_multiplier": {
       "evidence": "formula",
       "sourcePage": 8,
-      "expression": "1 + targetWeakness",
-      "inputDomain": "targetWeakness >= -1",
-      "notes": ["目标弱点低于 -100% 不属于已验证定义域。"]
+      "expression": "1 + targetWeakness"
     },
     "monster_correction": {
       "evidence": "formula",
       "sourcePage": 8,
       "expression": "(1 + targetBossWeakness) * sourceAttackCorrection * targetDefenseCorrection",
-      "inputRequirements": ["targetBossWeakness", "sourceAttackCorrection", "targetDefenseCorrection", "targetScenario"],
-      "notes": ["没有目标情境数据时应禁用，不得默认为未知修正；玩家与建筑不应套用怪物修正。"]
+      "notes": [
+        "没有目标情境数据时应禁用，不得默认为未知修正。"
+      ]
     },
     "final_fixed_delta": {
       "evidence": "formula",
@@ -276,92 +343,39 @@
     "damage_floor": {
       "evidence": "formula",
       "sourcePage": 9,
-      "expression": "max(coreResolvedDamage + finalFixedDelta, baseDamage * 0.005, 1)",
+      "expression": "max(resolvedDamage, baseDamage * 0.005, 1)",
       "display": "round(finalDamage)",
       "notes": [
-        "资料称先扣护盾，再扣生命；特殊固定/比例扣血可能绕过护盾。",
-        "单个事件分支必须先完成该分支的最终保底，再四舍五入显示。不能先对未保底分支概率加权、再统一做一次保底。"
+        "资料称先扣护盾，再扣生命；特殊固定/比例扣血可能绕过护盾。"
       ]
     },
-    "recommended_expected_damage": {
-      "evidence": "derived",
+    "expected_damage": {
+      "evidence": "formula",
       "sourcePage": 11,
       "expression": "baseDamageAtAttackMidpoint * increaseMultiplier * deepeningMultiplier * suppressionMultiplier * eventMultiplier + finalFixedDelta",
       "scope": "recommendation_and_relative_comparison",
-      "omits": ["crossTypeMultiplier", "weaknessMultiplier", "targetCountCoefficient", "monsterCorrection"],
-      "includes": ["attackMidpoint", "suppressionMultiplier", "increaseMultiplier", "deepeningMultiplier", "selectedEventStrategy"],
-      "excludes": ["perEventDamageFloor", "displayRounding", "shieldLoss", "healthLoss"],
-      "warning": "适合词条排序，不适合预测某一击数字，也不等于所有单次最终分支的数学期望。"
-    },
-    "single_hit_expectation": {
-      "evidence": "derived",
-      "expression": "P(block) * finalBlockedDamage + P(crit) * finalCriticalDamage + P(normal) * finalNormalDamage",
-      "scope": "probability_weighted_final_single_hit_under_selected_event_strategy",
-      "requires": ["eventOrderStrategy", "perEventDamageFloor", "perEventRoundingSemantics"],
-      "warning": "这是每个事件分支各自保底后的概率加权；仅当事件策略已明确选择时才可输出。它与 recommended_expected_damage 是不同的结果口径。"
-    },
-    "target_count_coefficient": {
-      "evidence": "formula",
-      "sourcePage": 8,
-      "expression": "affectedTargetCount <= fullDamageTargetCount ? 1 : max(fullDamageTargetCount / affectedTargetCount, 0.08)",
-      "scope": "actions_with_a_recorded_fullDamageTargetCount",
-      "inputRequirements": ["affectedTargetCount", "fullDamageTargetCount"],
-      "notes": [
-        "资料原文：命中目标数≤技能满伤目标数时为1；超过时为技能满伤目标数÷实际命中数，最低0.08。",
-        "单体动作记录 affectedTargetCount=1、fullDamageTargetCount=1 时系数为1；这只说明该次动作条件，不代表其它动作的满伤目标数也是1。",
-        "范围、多目标、弹射、分摊或额外命中动作必须记录实际命中目标数与该技能的满伤目标数；缺任一输入时绝对预测/校准不可用。"
-      ]
-    },
-    "snapshot_action_empirical_calibration": {
-      "evidence": "empirical",
-      "expression": "feasibleCoefficientSet = intersection_over_samples(searchCoefficient(fullFinalDamage(actionSnapshot, integerAttackRoll, labelledEvent) roundsTo observedJump))",
-      "scope": "named_action_and_named_hit_segment_with_identical_snapshot",
-      "requiresSnapshot": [
-        "actionName",
-        "hitSegment",
-        "damageType",
-        "sourceSnapshot",
-        "targetSnapshot",
-        "targetType",
-        "targetScenario",
-        "affectedTargetCount",
-        "fullDamageTargetCount",
-        "allBuffsAndStates",
-        "eventLabel",
-        "eventOrderStrategyIfProbabilityUsed",
-        "conditionalMultiplierEvidence"
+      "omits": [
+        "crossTypeMultiplier",
+        "weaknessMultiplier",
+        "targetCountCoefficient",
+        "monsterCorrection"
       ],
-      "invalidatesWhenChanged": [
-        "actionName",
-        "hitSegment",
-        "damageType",
-        "anySourceOrTargetInput",
-        "targetType",
-        "targetScenario",
-        "affectedTargetCount",
-        "fullDamageTargetCount",
-        "buffOrState",
-        "eventStrategy",
-        "roundingAssumption",
-        "conditionalMultiplierState"
-      ],
-      "notes": [
-        "经验有效系数可以吸收同一快照下尚未拆开的动作内部项，但不能证明技能内部裸系数，也不能迁移到其它动作、命中段、攻防快照、目标数或状态。",
-        "反解必须运行含最终固定项、保底和显示取整的完整事件函数；保底/负固定项附近不得使用线性相除。",
-        "未识别的实测事件不得自动归为普通；必须要求明确标签或拒绝该样本。"
-      ]
+      "warning": "适合词条排序，不适合预测某一击数字。"
     },
     "result_semantics": {
       "evidence": "formula",
-      "sourcePages": [6, 11, 12, 15],
+      "sourcePages": [
+        6,
+        11,
+        12,
+        15
+      ],
       "definitions": {
         "base_damage": "攻击随机值、破甲差、专攻差与防御倍率等完成后的基础层。",
-        "core_resolved_damage": "基础伤害经过适用乘区与事件倍率后的乘法结算层，尚未加入最终固定项。",
-        "resolved_damage": "core_resolved_damage 加上最终固定项后的结算层。",
-        "single_final_damage": "max(resolved_damage, 基础伤害 * 0.5%, 1)，可保留小数。",
+        "resolved_damage": "基础伤害经过适用乘区、事件倍率与最终固定项后的结算层。",
+        "single_final_damage": "max(结算伤害, 基础伤害 * 0.5%, 1)，可保留小数。",
         "display_jump": "round(单次最终伤害)。",
-        "recommended_expected_damage": "用攻击区间中点与选定事件策略计算的推荐/词条比较模型；省略跨类、弱点、目标数和怪物修正，不代表单次跳字或实际生命扣除。",
-        "single_hit_expectation": "各事件分支完成最终保底后，按已选事件策略概率加权的可选模型；不同于推荐期望，也不代表实际生命扣除。",
+        "expected_damage": "用攻击区间中点与事件概率算出的长期比较模型；不代表单次跳字或实际生命扣除。",
         "shield_and_health": "资料确认最终伤害先扣护盾、再扣生命，但未给出护盾吸收、溢出与取整的完整公式。"
       },
       "implementationRule": "界面必须把期望伤害、条件分支最终伤害、显示跳字、实测护盾损失与实测生命损失分开显示和记录。"
@@ -370,22 +384,25 @@
       "evidence": "formula",
       "sourcePage": 7,
       "expression": "clamp(1 + 0.025 * (sourceSkillEnhancement - targetSkillResistance) / combatLevel, 0.05, 2.5)",
-      "scope": "verified_or_empirically_calibrated_named_action_only; normal_attack_pending",
-      "notes": ["第16页另有录屏支持条目称平A也吃技能增强，存在证据冲突。对任意具名技能可作为候选公式项，但必须由该动作证据或同快照校准支持。"]
+      "scope": "active_skill_only_until_normal_attack_test",
+      "notes": [
+        "第16页另有录屏支持条目称平A也吃技能增强，存在证据冲突。"
+      ]
     },
     "skill_level_part": {
       "evidence": "formula",
       "sourcePage": 7,
       "expression": "skillCoefficient * skillLevel * 120 * skillEnhancementMultiplier",
-      "scope": "named_active_skill_only_when_the_action_formula_or_same-snapshot empirical calibration establishes_it",
-      "notes": ["不能因为页面存在技能等级、技能增强或说明数字，就为任意技能自动加入该项。"]
+      "scope": "active_skill_only"
     },
     "skill_description_value": {
       "evidence": "verified",
       "sourcePage": 14,
       "expression": "floor(skillCoefficient * (attackMidpoint + 120 * skillLevel))",
       "scope": "skill_tooltip_display_only",
-      "notes": ["不含随机、破甲、专攻、防御、技能增强和其他乘区。该关系仅限资料明确覆盖的具名技能/命中段，未知技能说明值只能保存为证据，不得自动反推系数。"]
+      "notes": [
+        "不含随机、破甲、专攻、防御、技能增强和其他乘区。"
+      ]
     },
     "control_multiplier": {
       "evidence": "formula",
@@ -403,7 +420,7 @@
     {
       "id": "event_order",
       "status": "inference",
-      "description": "资料用先格挡后暴击解释统计，但明确标为推断。概率加权与无事件标签校准必须要求显式策略；已标注普通/暴击/格挡的单分支样本不因此证实事件顺序。"
+      "description": "资料用先格挡后暴击解释统计，但明确标为推断。"
     },
     {
       "id": "camp_base_multiplier",
@@ -418,215 +435,127 @@
     {
       "id": "rounding",
       "status": "pending",
-      "description": "资料支持最终显示四舍五入，但各中间步骤取整位置未完全确定。反推跳字只能称为基于最终四舍五入假设的可行集合，不能称为严格服务器区间。"
-    },
-    {
-      "id": "target_count_coefficient",
-      "status": "input_and_action_metadata_pending",
-      "description": "目标数系数的分段公式已有来源：命中数≤技能满伤目标数时为1，超过时为满伤目标数÷实际命中数，最低0.08。当前待补的是每个具名动作的满伤目标数，以及范围、弹射、分摊和追加命中的实际命中计数语义。"
-    },
-    {
-      "id": "building_damage_rules",
-      "status": "pending",
-      "description": "建筑是否适用玩家压制/抵抗、事件概率、跨类、弱点及其它常规乘区尚未确认。建筑绝对预测和经验校准应默认不可用，直到有专属测试。"
-    },
-    {
-      "id": "cross_type_context",
-      "status": "pending",
-      "description": "跨类公式本身有来源，但当前产品未收集伤害类型、目标类别及双方跨类输入；缺少这些条件时不得把该项静默视为已知中性倍率。"
-    },
-    {
-      "id": "monster_correction_context",
-      "status": "pending",
-      "description": "怪物修正公式有来源，但首领弱点、攻防修正与目标情境缺失时必须禁用；玩家和建筑不适用该修正。"
-    }
-  ],
-  "empiricalEvidenceRecords": [
-    {
-      "id": "purification-slash-pvp-2026-09-06",
-      "evidence": "empirical",
-      "recordedOn": "2026-09-06",
-      "status": "integer_full_branch_recomputed_snapshot_bound_empirical_set",
-      "action": {
-        "name": "净化之斩",
-        "hitSegment": "主目标单段",
-        "damageType": "physical",
-        "skillLevel": 20,
-        "tooltipValue": 3227,
-        "tooltipValueTreatment": "evidence_only_not_used_to_derive_coefficient"
-      },
-      "calculationStatus": "integer_attack_full_branch_search_under_final_display_rounding_assumption",
-      "snapshot": {
-        "sourceId": "not_captured_in_supplied_evidence",
-        "targetId": "熊熊熊 (combat-log label; stable character identifier not captured)",
-        "targetType": "player",
-        "targetScenario": "PVP player target; exact map/location was not captured in the supplied evidence",
-        "affectedTargetCount": 1,
-        "fullDamageTargetCount": "not established from this one-target PVP log",
-        "targetCountCondition": {
-          "observedLoggedTargets": 1,
-          "candidateMultiplier": 1,
-          "reason": "for any valid fullDamageTargetCount >= 1, affectedTargetCount=1 produces 1 under the sourced target-count rule; this does not establish 净化之斩's fullDamageTargetCount or its AoE/counting semantics"
-        },
-        "sourceCamp": "not_captured_in_supplied_evidence",
-        "targetCamp": "not_captured_in_supplied_evidence",
-        "source": {
-          "characterLevel": 69,
-          "combatLevel": 18,
-          "physicalAttackMin": 4736,
-          "physicalAttackMax": 5066,
-          "armorBreak": 569,
-          "specialization": 0,
-          "breakDefenseFlat": 1531,
-          "breakDefensePercent": 0.136,
-          "crit": 599,
-          "pierce": 1702,
-          "critDamage": 1.564,
-          "finalDamageBonus": 91,
-          "skillEnhancement": 603,
-          "damageIncrease": 0,
-          "damageDeepening": 0.0761,
-          "pathSuppression": 0.045
-        },
-        "target": {
-          "characterLevel": 69,
-          "combatLevel": 18,
-          "defense": 2610,
-          "armor": 434,
-          "specializationDefense": 2201,
-          "antiCrit": 611,
-          "critDamageReduction": 0.064,
-          "block": 2039,
-          "damageReduction": 0.17,
-          "damageMitigation": 0.078,
-          "finalDamageResistance": 91,
-          "skillResistance": 310,
-          "pathResistance": 0.045
-        },
-        "conditionalAssumptions": {
-          "campBaseMultiplier": {"value": 1, "status": "explicit_experimental_assumption"},
-          "crossTypeMultiplier": {"value": 1, "sourceCrossTypeIncrease": 0, "targetCrossTypeImmunity": 0, "status": "explicit_neutral_experimental_assumption"},
-          "weaknessMultiplier": {"value": 1, "targetWeakness": 0, "status": "explicit_neutral_experimental_assumption"},
-          "monsterCorrection": {"value": 1, "status": "not_applicable_player_target"},
-          "eventOrder": {"status": "not_used_for_labelled_branch_fit", "note": "all observations have explicit event labels"},
-          "rounding": {"assumption": "final_display_round", "status": "intermediate_rounding_pending"}
-        },
-        "allBuffsAndStates": "no additional Buff/state was recorded in the supplied test evidence; this absence is a snapshot condition, not proof that none existed"
-      },
-      "observations": {
-        "normal": [431],
-        "critical": [652, 655],
-        "blocked": [132, 132, 133]
-      },
-        "candidatePipeline": {
-        "id": "physical-pvp-main-chain-2026-09-06",
-        "includes": [
-          "attack-roll",
-          "armor-delta",
-          "specialization-delta",
-          "fixed-then-percent-defense-break",
-          "defense-multiplier",
-          "candidate-skill-level-part",
-          "suppression-increase-deepening",
-          "labelled-normal-critical-blocked-branches",
-          "final-fixed-delta",
-          "damage-floor",
-          "final-display-rounding-assumption"
-        ],
-        "excludesOrNeutralConditions": [
-          "monster-correction-not-applicable-for-player",
-          "explicit-neutral-cross-type-and-weakness-experimental-assumptions",
-          "one-observed-target-is-neutral-for-any-valid-fullDamageTargetCount-but-action-metadata-remains-unestablished"
-          ]
-        },
-        "recentTestAudit": {
-          "status": "same_snapshot_identifiability_review_2026-09-06",
-          "confirmedSnapshotArithmetic": {
-            "armorDelta": 45,
-            "effectiveDefense": 932.256,
-            "defenseMultiplier": 0.472599194939621,
-            "skillEnhancementMultiplierCandidate": 1.406944444444444,
-            "increaseMultiplier": 0.83,
-            "deepeningMultiplier": 0.9981,
-            "suppressionMultiplier": 1,
-            "recordedNonEventMultiplier": 0.828423,
-            "finalFixedDelta": 0,
-            "candidateFloorTriggered": false
-          },
-          "supportsButDoesNotIdentify": [
-            "six labelled jumps have one shared coefficient feasible set under the complete candidate pipeline and final-display-round assumption",
-            "the recorded normal, critical and blocked labels are compatible with candidate branch multipliers normal=1, critical=1.5 and blocked=0.3",
-            "the old coefficient 0.084919874 is excluded for this named action and snapshot under the same candidate pipeline",
-            "the other-skill tooltip relation tooltipValue / (attackMidpoint + 120 * skillLevel) would yield approximately 0.441994 for tooltip 3227 and is excluded for purification slash under this candidate pipeline"
-          ],
-          "notTestedOrNotIdentifiableFromThisSnapshot": [
-            "skill-level part and skill-enhancement multiplier: a second feasible coefficient set remains when the whole skill-level part is disabled",
-            "armor/defense/ignore-defense order and defense formula: all are confounded with the fitted coefficient because no one-variable defense change exists",
-            "increase, deepening and suppression layers: their product is observed only as one fixed multiplier in this snapshot",
-            "crit/pierce probability formulas and event order: six labelled outcomes contain no frequency experiment and labels do not establish event order",
-            "intermediate rounding, attack endpoint inclusion and attack-roll distribution",
-            "cross-type, weakness and camp multipliers: they were entered as neutral assumptions rather than independently observed conditions",
-            "target-count formula beyond this one recorded single-target condition"
-          ],
-          "eventStrategyImplementation": "the runtime only evaluates the explicit block-first inference; unknown or unsupported strategy disables probability-weighted output rather than silently reusing block-first",
-          "correctedSnapshotConsistency": "supplied screenshots show attacker specialization 0 and target specialization defense 2201; an earlier evidence record incorrectly used 0 for target specialization defense, but it had no numerical effect because max(0 - 2201, 0) is 0"
-        },
-        "coefficientAssessment": {
-        "oldOtherSkillCoefficient": 0.084919874,
-        "oldCoefficientOutcome": "excluded_by_all_recorded_jump_samples_under_the_current_integer_full_branch_search",
-        "legacyContinuousEndpointEffectiveCoefficientInterval": {"min": 0.092046, "max": 0.092416, "displayMidpoint": 0.092231, "status": "historical_rounded_comparison_only"},
-        "integerFullBranchEffectiveCoefficientInterval": {"min": 0.0920459826171472, "max": 0.09241555485440132, "displayMin": 0.092046, "displayMax": 0.092416, "midpoint": 0.09223076873577427, "displayMidpoint": 0.092231},
-        "meaning": "当前运行时以每个4736–5066攻击整数、已标记事件、最终固定项、逐分支保底和最终显示四舍五入假设求得的同快照经验有效系数集合；只能在完整快照确认后绑定，不能当作游戏内部裸系数"
-      },
-      "nonClaims": [
-        "not_a_universal_internal_skill_coefficient",
-        "not_validation_of_each_individual_formula_layer",
-        "not_evidence_that_tooltip_3227_can_derive_a_coefficient",
-        "not_transferable_to_another_hit_segment_target_count_target_snapshot_or_buff_state",
-        "must_be_rechecked_if_the_candidate_pipeline_or_rounding_assumption_changes"
-      ],
-      "evidenceAssets": [
-        "user-supplied attacker/defender panel screenshots, 2026-09-06",
-        "user-supplied 净化之斩 tooltip screenshot, 2026-09-06",
-        "user-supplied labelled combat-log jump screenshots, 2026-09-06"
-      ]
+      "description": "资料支持最终显示四舍五入，但各中间步骤取整位置未完全确定。"
     }
   ],
   "templateTables": [
     {
       "id": "standard_player_attack",
-      "sourcePages": [17, 18],
+      "sourcePages": [
+        17,
+        18
+      ],
       "status": "template",
-      "columns": ["level", "attack", "armorBreak", "defenseBreak", "defenseBreakPercent", "skillEnhancement", "crit", "critDamage", "pierce", "damageIncrease", "damageDeepening", "finalDamageBonus", "pathSpecialization"]
+      "columns": [
+        "level",
+        "attack",
+        "armorBreak",
+        "defenseBreak",
+        "defenseBreakPercent",
+        "skillEnhancement",
+        "crit",
+        "critDamage",
+        "pierce",
+        "damageIncrease",
+        "damageDeepening",
+        "finalDamageBonus",
+        "pathSpecialization"
+      ]
     },
     {
       "id": "standard_player_defense",
-      "sourcePages": [18, 19],
+      "sourcePages": [
+        18,
+        19
+      ],
       "status": "template",
-      "columns": ["level", "health", "defense", "armor", "skillResistance", "antiCrit", "critDamageReduction", "block", "damageReduction", "damageMitigation", "finalDamageResistance", "pathSpecializationDefense"]
+      "columns": [
+        "level",
+        "health",
+        "defense",
+        "armor",
+        "skillResistance",
+        "antiCrit",
+        "critDamageReduction",
+        "block",
+        "damageReduction",
+        "damageMitigation",
+        "finalDamageResistance",
+        "pathSpecializationDefense"
+      ]
     },
     {
       "id": "standard_boss",
-      "sourcePages": [19, 20, 21],
+      "sourcePages": [
+        19,
+        20,
+        21
+      ],
       "status": "template",
-      "columns": ["level", "health", "attack", "armorBreak", "defenseBreak", "crit", "critDamage", "pierce", "pathSpecialization", "pathSuppression", "defense", "armor", "block", "antiCrit", "critDamageReduction", "skillResistance"],
-      "notes": ["首领模板缺少的抗暴、减伤等项目按0显示；表中攻击/破甲是首领攻击玩家时使用的输入。"]
+      "columns": [
+        "level",
+        "health",
+        "attack",
+        "armorBreak",
+        "defenseBreak",
+        "crit",
+        "critDamage",
+        "pierce",
+        "pathSpecialization",
+        "pathSuppression",
+        "defense",
+        "armor",
+        "block",
+        "antiCrit",
+        "critDamageReduction",
+        "skillResistance"
+      ],
+      "notes": [
+        "首领模板缺少的抗暴、减伤等项目按0显示；表中攻击/破甲是首领攻击玩家时使用的输入。"
+      ]
     }
   ],
   "specialBranches": [
-    {"id": "auto_chess", "status": "disabled", "sourcePage": 15, "reason": "独立防御倍率与暴击随机，不得套用常规平A。"},
-    {"id": "life_ratio_damage", "status": "disabled", "sourcePage": 15},
-    {"id": "reflection", "status": "disabled", "sourcePage": 15},
-    {"id": "shield", "status": "disabled", "sourcePage": 15, "notes": ["吸收上限为目标最大生命35%；部分固定/比例扣血绕过护盾。"]},
+    {
+      "id": "auto_chess",
+      "status": "disabled",
+      "sourcePage": 15,
+      "reason": "独立防御倍率与暴击随机，不得套用常规平A。"
+    },
+    {
+      "id": "life_ratio_damage",
+      "status": "disabled",
+      "sourcePage": 15
+    },
+    {
+      "id": "reflection",
+      "status": "disabled",
+      "sourcePage": 15
+    },
+    {
+      "id": "shield",
+      "status": "disabled",
+      "sourcePage": 15,
+      "notes": [
+        "吸收上限为目标最大生命35%；部分固定/比例扣血绕过护盾。"
+      ]
+    },
     {
       "id": "healing",
       "status": "disabled",
-      "sourcePages": [10, 15],
+      "sourcePages": [
+        10,
+        15
+      ],
       "notes": [
         "用户已确认：游戏内治疗不会暴击。",
         "资料第10页的“4.4 治疗暴击率”与游戏内事实冲突，标记为错误资料；不得实现或引用为候选公式。"
       ]
     },
-    {"id": "equipment_generation", "status": "input_helper_only", "sourcePage": 16}
+    {
+      "id": "equipment_generation",
+      "status": "input_helper_only",
+      "sourcePage": 16
+    }
   ]
 }
