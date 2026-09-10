@@ -394,8 +394,8 @@
     },
     {
       id: "gvg-small-account",
-      title: "小号 GVG · 炸尸体",
-      description: "专门归档小号 GVG 炸尸体方案，适合装备与属性仍在成型中的歌颂者。",
+      title: "小号 GVG · 烧尸体",
+      description: "专门归档小号 GVG 烧尸体方案，适合装备与属性仍在成型中的歌颂者。",
     },
   ];
 
