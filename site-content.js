@@ -228,6 +228,16 @@ window.SITE_CONTENT = Object.freeze({
       note: "复制该消息，在一键辅助界面右下角点击【导入】，即可一键使用来自【夏亚丶】的方案。",
       guideId: "pve-notes",
     },
+    {
+      id: "gvg-small-account-corpse",
+      branch: "gvg-small-account",
+      title: "小号 GVG 炸尸体｜夏亚丶方案",
+      scenario: "一键辅助：惩戒、人脉技能、秘偶技能、神圣盔甲等。",
+      version: "公测首月｜小号 GVG",
+      updated: "当前方案｜待补充核验日期",
+      code: "[[0Ypoby0000002R1N0y0Kmyp137KqfP0bLnHP4CbHm536tz5T4BhU2O3NipKm2xF3pq2OMVM328AruQ1TGQz320fl7w1zT8oz1ovACd21F3XB1qgNI92fnp1n043CLz1CF3Pd22WEU525rsJt37JDFc1viAP81mcRWc2fDHCj1ovACd21FbdK1mcMAs1CF3Pd22WELp20Csoz2OMVM328AruQ1TGQz320fl7w1zQOKf1ovACd21F3XB1qgNHu38Rbls1viAPA1mdoWz3lusaC2ZiBVb28AruQ1Qzdbx01mgMV1CF3Pd22WEU525rsMw05otPK37JDFc1viAP81mcRWb2fHNG32fmZLV2OMVM328AruQ1TGQz320fl7w1zNdqL1ovACd21F3XB1qgNM238Rbls1viAPA1mdoWz3lusaC3J80Jv28AruQ1Qzdbx01mQJ001mYvR2gLfiz1ovACd21FbdK1mcYWD0aoYd01CF3Pd22WELp20Cskr2fHV5O03QBSQ37KqfP0bLnHP4CbHof1vDyQW2vixbk000000]]",
+      note: "复制该消息，在一键辅助界面右下角点击【导入】，一键使用来自【夏亚丶】的方案。",
+    },
   ],
   videos: [
     {
