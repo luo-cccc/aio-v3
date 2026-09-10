@@ -135,7 +135,7 @@ window.SITE_CONTENT = Object.freeze({
       featured: false,
       url: "guide-singer-pve.html",
       comboIds: ["pve-combo-ready"],
-      videoIds: ["singer-sequence8-pvp-pve-guide", "singer-sequence8-pvp-pve-guide-douyin", "singer-pve-31k-dps-guide", "singer-pve-31k-dps-guide-douyin"],
+      videoIds: ["singer-sequence8-pvp-pve-guide", "singer-sequence8-pvp-pve-guide-douyin"],
       article: {
         intro: "本次更新补充序列 8 开放后的 PVE 调整：非凡天赋优先补穿刺，圣光净化的穿刺收益注意覆盖率与最低面板，其他属性、封印物和秘偶继续沿用上期攻略的思路。",
         published: "2026年9月7日",
@@ -268,8 +268,6 @@ window.SITE_CONTENT = Object.freeze({
       published: "2026年9月1日发布",
       description: "歌颂者 PVP / GVG 实战攻略视频。",
       url: "https://www.bilibili.com/video/BV1Lyth6QE5X/",
-      guideId: "field-manual",
-      comboIds: ["pvp-combo-ready"],
     },
     {
       id: "singer-pvp-gvg-guide-douyin",
@@ -278,8 +276,6 @@ window.SITE_CONTENT = Object.freeze({
       published: "2026年9月1日发布",
       description: "歌颂者 PVP / GVG 实战攻略视频。",
       url: "https://v.douyin.com/YLJ0pR7n-nM/",
-      guideId: "field-manual",
-      comboIds: ["pvp-combo-ready"],
     },
     {
       id: "singer-pve-31k-dps-guide",
@@ -288,7 +284,6 @@ window.SITE_CONTENT = Object.freeze({
       published: "2026年9月3日发布",
       description: "歌颂者 PVE 实战攻略视频。",
       url: "https://www.bilibili.com/video/BV1HAbF6GEiP/",
-      guideId: "pve-notes",
     },
     {
       id: "singer-pve-31k-dps-guide-douyin",
@@ -297,7 +292,6 @@ window.SITE_CONTENT = Object.freeze({
       published: "2026年9月3日发布",
       description: "歌颂者 PVE 实战攻略视频。",
       url: "https://v.douyin.com/rvzFRftLf0s/",
-      guideId: "pve-notes",
     },
   ],
 });
