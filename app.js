@@ -430,14 +430,17 @@
   const videoItem = (video) => {
     const url = safeExternalUrl(video.url);
     const available = Boolean(url);
-    const guide = findEntry(content.guides, video.guideId);
-    const guideUrl = safeContentUrl(guide?.url);
+    const guideIds = [...new Set([video.guideId, ...(video.guideIds || [])].filter(Boolean))];
+    const guideLinks = guideIds
+      .map((id) => findEntry(content.guides, id))
+      .filter((guide) => safeContentUrl(guide?.url))
+      .map((guide) => `<a href="${escapeHtml(safeContentUrl(guide.url))}">${icon("file-text")} 关联攻略</a>`)
+      .join("");
     const comboLinks = (video.comboIds || [])
       .map((id) => findEntry(content.combos, id))
       .filter((combo) => combo?.code)
       .map((combo) => `<a href="combos.html#combo-${escapeHtml(combo.id)}">${icon("zap")} 关联连招码</a>`)
       .join("");
-    const guideLink = guideUrl ? `<a href="${escapeHtml(guideUrl)}">${icon("file-text")} 关联攻略</a>` : "";
     const action = available
       ? `<a class="video-action" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">前往观看 ${icon("external-link")}</a>`
       : `<span class="video-action video-action--pending">链接待补充</span>`;
@@ -448,7 +451,7 @@
             <span class="card-status">${escapeHtml(video.platform)}</span>
             <h2>${escapeHtml(video.title)}</h2>
             <p>${escapeHtml(video.description)}</p>
-            <div class="meta-line"><span>${icon("calendar-days")} ${escapeHtml(video.published)}</span>${guideLink}${comboLinks}</div>
+            <div class="meta-line"><span>${icon("calendar-days")} ${escapeHtml(video.published)}</span>${guideLinks}${comboLinks}</div>
           </div>
           ${action}
         </div>
