@@ -153,7 +153,7 @@
           </a>
           <a class="dock-link" href="combos.html">
             <span class="dock-icon" aria-hidden="true">${icon("zap")}</span>
-             <span class="dock-copy"><strong>一键连招码</strong><small>PVP / PVE / 小号 GVG 分类</small></span>
+             <span class="dock-copy"><strong>一键连招码</strong><small>PVP / PVE / GVG 专项分类</small></span>
           </a>
           <a class="dock-link" href="calculator.html">
             <span class="dock-icon" aria-hidden="true">${icon("calculator")}</span>
@@ -393,6 +393,11 @@
       description: "PVE 场景使用的实测连招会在这里单独归档，并标注适用版本与最后测试时间。",
     },
     {
+      id: "pve-hammer",
+      title: "PVE · 锤子",
+      description: "专门归档 PVE 锤子方案，方便在需要切换锤子技能组时快速导入。",
+    },
+    {
       id: "gvg-small-account",
       title: "小号 GVG · 烧尸体",
       description: "专门归档小号 GVG 烧尸体方案，适合装备与属性仍在成型中的歌颂者。",
@@ -420,9 +425,9 @@
       <div class="page-hero__layout">
         <div>
           <h1 id="page-title" class="page-title">一键连招码</h1>
-           <p>连招码按 PVP、PVE 与小号 GVG 分支归档，方便按实战场景查找。每条内容标注适用阶段、核验信息与关联内容。</p>
+           <p>连招码按 PVP、PVE、PVE 锤子与小号 GVG 分支归档，方便按实战场景查找。每条内容标注适用阶段、核验信息与关联内容。</p>
          </div>
-         <div class="page-hero__meta"><span>3 个实战分支</span><span>核验信息见条目</span></div>
+         <div class="page-hero__meta"><span>4 个实战分支</span><span>核验信息见条目</span></div>
        </div>
      </section>
     <section class="content-band combo-branches" aria-label="连招码分支">${comboBranches.map(comboBranch).join("")}</section>`;

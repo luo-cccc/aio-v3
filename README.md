@@ -16,12 +16,10 @@ python -m http.server 4173 --bind 127.0.0.1
 
 ## 最新更新
 
-### 2026-09-10
+### 2026-09-13
 
-- 新增专门面向小号的 GVG“烧尸体”一键连招分支与夏亚丶方案。
-- 首页连招入口与连招页说明同步展示 PVP、PVE、小号 GVG 三类分支。
-- 新增 9 月 7 日发布的歌颂者序列 8 PVP/PVE 攻略与属性计算器视频，支持哔哩哔哩和抖音观看。
-- 仅最新视频关联 PVP/GVG、PVE 图文攻略及对应连招码，原有往期视频继续保留在归档中。
+- 新增独立的 PVE 锤子一键连招分支，支持快速复制并导入夏亚丶方案。
+- 连招页现在分别归档 PVP、PVE、PVE 锤子和小号 GVG 四类实战分支。
 
 完整记录见 [更新记录](docs/releases/release-notes.md)。
 
@@ -32,7 +30,7 @@ python -m http.server 4173 --bind 127.0.0.1
 - `platforms`：填入各平台主页的完整 `https://` 链接。
 - `version`：填入适用阶段、官方版本信息和最后核验日期。
 - `guides`：新增或更新图文攻略条目。
-- `combos`：按 `branch: "pvp"`、`branch: "pve"` 或 `branch: "gvg-small-account"` 填入实测连招码；填写后复制按钮会自动启用。
+- `combos`：按 `branch: "pvp"`、`branch: "pve"`、`branch: "pve-hammer"` 或 `branch: "gvg-small-account"` 填入实测连招码；填写后复制按钮会自动启用。
 - `videos`：填入原平台的完整 `https://` 视频地址。
 
 条目之间可选的关联字段也已预留：攻略可使用 `url`、`comboIds`、`videoIds`；连招码可使用 `guideId`、`videoId`；视频可使用 `guideId`、`comboIds`。只有关联内容真实可用时，页面才会显示对应入口。

@@ -230,6 +230,16 @@ window.SITE_CONTENT = Object.freeze({
       guideId: "pve-notes",
     },
     {
+      id: "pve-hammer-combo-ready",
+      branch: "pve-hammer",
+      title: "PVE 锤子连招码｜夏亚丶方案",
+      scenario: "一键辅助：惩戒、秩序审判、圣光净化、惩戒等。",
+      version: "公测首月｜PVE 锤子",
+      updated: "2026年9月13日新增｜待补充核验日期",
+      code: "[[2sLkdn0000002R1N0y0Kmyp133y8Xt0bMswW01t74u2dNRyk4BgxkQ2QaaFk2xF3ty2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zT7B32fnp1n043CLy1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otuc2gLfer1ovACd21F3XB1qgP0D1ovACd21FbdK1mcYWD0aoXI12fHUkk095ay237JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC3UNAdm08auyx2fDH8b1ovACd21F3XB1qgg3F1ovACd21FbdK1mcMAT2OMEJ128AruQ1Qzdbx031sl128AruQ1TGQz31zpwEU37JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC2OFhTm1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otPK2fHNG32fmZLV2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zFMnK37JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC3UNAdm08auyx2xGY0f21dVkU1GUL1I30GXgm000000]]",
+      note: "复制该消息，在一键辅助界面右下角点击【导入】，一键使用来自【夏亚丶】的方案。",
+    },
+    {
       id: "gvg-small-account-corpse",
       branch: "gvg-small-account",
       title: "小号 GVG 烧尸体｜夏亚丶方案",
