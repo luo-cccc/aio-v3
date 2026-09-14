@@ -70,7 +70,7 @@
   const headerTemplate = () => {
     const navigation = navItems
       .map(([id, label, href]) => {
-        const current = id === page || (["guidePvpGvg", "guidePve"].includes(page) && id === "guides") ? ' aria-current="page"' : "";
+        const current = id === page || (["guidePvpGvg", "guidePve", "guideSingerStrategy", "guideSingerPve0915"].includes(page) && id === "guides") ? ' aria-current="page"' : "";
         return `<a href="${href}"${current}>${label}</a>`;
       })
       .join("");
@@ -526,7 +526,9 @@
       home: homePage,
       guides: guidesPage,
       guidePvpGvg: () => guideArticlePage("field-manual"),
+      guideSingerStrategy: () => guideArticlePage("strategic-server-prep"),
       guidePve: () => guideArticlePage("pve-notes"),
+      guideSingerPve0915: () => guideArticlePage("singer-pve-09-15"),
       combos: combosPage,
       calculator: calculatorPage,
       videos: videosPage,
