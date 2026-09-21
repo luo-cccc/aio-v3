@@ -70,7 +70,7 @@
   const headerTemplate = () => {
     const navigation = navItems
       .map(([id, label, href]) => {
-        const current = id === page || (["guidePvpGvg", "guidePve", "guideSingerStrategy", "guideSingerPve0915"].includes(page) && id === "guides") ? ' aria-current="page"' : "";
+        const current = id === page || (["guidePvpGvg", "guideSingerPvpGvg0921", "guidePve", "guideSingerStrategy", "guideSingerPve0915"].includes(page) && id === "guides") ? ' aria-current="page"' : "";
         return `<a href="${href}"${current}>${label}</a>`;
       })
       .join("");
@@ -298,6 +298,8 @@
           ${icon("external-link")}
         </a>`)
       .join("");
+    const hasRelations = Boolean(relatedCombos || relatedVideos);
+    const relatedFallback = `<p class="article-relations__empty">本篇暂未关联连招码或视频，后续按实测结果补充。</p>`;
 
     return `
       <article class="guide-article" aria-labelledby="article-title">
@@ -332,9 +334,9 @@
             <section class="article-section article-section--related" aria-labelledby="related-heading">
               <div class="article-section__heading">
                 <h2 id="related-heading">关联内容</h2>
-                <p>${relatedVideos ? "需要直接导入方案或回看实战时，可从这里继续。" : "需要直接导入方案时，可从这里继续。"}</p>
+                <p>${hasRelations ? "需要直接导入方案或回看实战时，可从这里继续。" : "本篇先以手动技能轴和实战判断为主。"}</p>
               </div>
-              <div class="article-relations">${relatedCombos}${relatedVideos}</div>
+              <div class="article-relations">${hasRelations ? `${relatedCombos}${relatedVideos}` : relatedFallback}</div>
             </section>
           </div>
         </div>
@@ -526,6 +528,7 @@
       home: homePage,
       guides: guidesPage,
       guidePvpGvg: () => guideArticlePage("field-manual"),
+      guideSingerPvpGvg0921: () => guideArticlePage("singer-pvp-gvg-0921"),
       guideSingerStrategy: () => guideArticlePage("strategic-server-prep"),
       guidePve: () => guideArticlePage("pve-notes"),
       guideSingerPve0915: () => guideArticlePage("singer-pve-09-15"),

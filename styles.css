@@ -1255,6 +1255,13 @@ img {
   border-bottom: 1px solid var(--line);
 }
 
+.article-relations__empty {
+  margin: 0;
+  padding: 18px 2px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
 .article-relation {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
