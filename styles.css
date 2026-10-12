@@ -1179,6 +1179,10 @@ img {
   background: #080909;
 }
 
+.article-figure + .article-figure {
+  margin-top: 16px;
+}
+
 .article-figure::after {
   position: absolute;
   z-index: 1;

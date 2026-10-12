@@ -70,7 +70,7 @@
   const headerTemplate = () => {
     const navigation = navItems
       .map(([id, label, href]) => {
-        const current = id === page || (["guidePvpGvg", "guideSingerPvpGvg0921", "guidePve", "guideSingerStrategy", "guideSingerPve0915"].includes(page) && id === "guides") ? ' aria-current="page"' : "";
+        const current = id === page || (["guidePvpGvg", "guideSingerPvpGvg0921", "guideSingerSequence7Gvg1012", "guidePve", "guideSingerStrategy", "guideSingerPve0915"].includes(page) && id === "guides") ? ' aria-current="page"' : "";
         return `<a href="${href}"${current}>${label}</a>`;
       })
       .join("");
@@ -274,7 +274,20 @@
       <div class="empty-state" data-guide-empty hidden>${icon("search-x")}<span>当前筛选下还没有归档内容。</span></div>
     </section>`;
 
-  const guideArticlePage = (guideId) => {
+    const articleFigures = (section) => {
+      const images = Array.isArray(section.images) && section.images.length
+        ? section.images
+        : section.image
+          ? [{ src: section.image, alt: section.imageAlt, caption: section.caption }]
+          : [];
+      return images
+        .filter((image) => image?.src)
+        .map((image) => `
+                <figure class="article-figure"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt || "攻略配图")}" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>${escapeHtml(image.caption || "攻略配图")}</figcaption></figure>`)
+        .join("");
+    };
+
+    const guideArticlePage = (guideId) => {
     const guide = findEntry(content.guides, guideId);
     const article = guide?.article || {};
     const sections = article.sections || [];
@@ -327,7 +340,7 @@
           <div class="article-body">${sections.map((section, index) => `
             <section class="article-section${index === 0 ? " article-section--opening" : ""}" id="${escapeHtml(section.id)}">
               <div class="article-section__heading"><h2>${escapeHtml(section.title)}</h2><p>${escapeHtml(section.lead)}</p></div>
-              ${section.image ? `<figure class="article-figure"><img src="${escapeHtml(section.image)}" alt="${escapeHtml(section.imageAlt)}" width="1920" height="1080" loading="lazy" decoding="async" /><figcaption>${escapeHtml(section.caption)}</figcaption></figure>` : ""}
+              ${articleFigures(section)}
               <div class="article-copy">${(section.blocks || []).map((block) => `<h3>${escapeHtml(block.title)}</h3><p>${escapeHtml(block.text)}</p>`).join("")}</div>
             </section>`).join("")}
 
@@ -529,6 +542,7 @@
       guides: guidesPage,
       guidePvpGvg: () => guideArticlePage("field-manual"),
       guideSingerPvpGvg0921: () => guideArticlePage("singer-pvp-gvg-0921"),
+      guideSingerSequence7Gvg1012: () => guideArticlePage("singer-sequence7-gvg-10-12"),
       guideSingerStrategy: () => guideArticlePage("strategic-server-prep"),
       guidePve: () => guideArticlePage("pve-notes"),
       guideSingerPve0915: () => guideArticlePage("singer-pve-09-15"),
