@@ -563,10 +563,10 @@ window.SITE_CONTENT = Object.freeze({
       id: "pve-hammer-combo-ready",
       branch: "pve-hammer",
       title: "PVE 锤子连招码｜夏亚丶方案",
-      scenario: "一键辅助：惩戒、秩序审判、圣光净化、惩戒等。",
+      scenario: "一键辅助：人脉技能、秩序审判、惩戒、圣光净化等。",
       version: "公测首月｜PVE 锤子",
-      updated: "2026年9月13日新增｜待补充核验日期",
-      code: "[[2sLkdn0000002R1N0y0Kmyp133y8Xt0bMswW01t74u2dNRyk4BgxkQ2QaaFk2xF3ty2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zT7B32fnp1n043CLy1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otuc2gLfer1ovACd21F3XB1qgP0D1ovACd21FbdK1mcYWD0aoXI12fHUkk095ay237JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC3UNAdm08auyx2fDH8b1ovACd21F3XB1qgg3F1ovACd21FbdK1mcMAT2OMEJ128AruQ1Qzdbx031sl128AruQ1TGQz31zpwEU37JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC2OFhTm1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otPK2fHNG32fmZLV2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zFMnK37JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC3UNAdm08auyx2xGY0f21dVkU1GUL1I30GXgm000000]]",
+      updated: "2026年10月13日更新｜待补充核验日期",
+      code: "[[3qJx3w0000002R1N0y0Kmyp13BSLuj4Dwcnt1TDMU52ild8L4CjokW3Ps9XM3Kgs0v1p6CpO38Rbls1viAPA1mdoWz0K3XVr28AruQ1Qzdbx02unpj1CF3Pd22WELp20Cskr2gPtH0095aw32fmZLW2OMVM328AruQ1TGQz320fl7w1zNdqL1ovACd21F3XB1qgNM238Rbls1viAPA1mdoWz3lusaC3UTxWV28AruQ1Qzdbx01mQN802uwiH2fnp1n043CLz1CF3Pd22WELp20CslH1CF3Pd22WEU525rsJw37JDFc1viAP81mcRWc2gLfiz1ovACd21FbdK1mcYWD0aoYd01CF3Pd22WELp20Cskr2gPtH0095aw32fmZLV2OMVM328AruQ1TGQz320fl7w1zFONN1ovACd21F3XB1qgNM238Rbls1viAPA1mdoWz3lusaC3UTxWV28AruQ1Qzdbx01mQN802uwiH2fnp1n043TP11CF3Pd22WEU525rsMw05otOM37JDFc1viAP81mcRWb2fHNG32fm1FS2OMVM328AruQ1TGQz320fl7w1zT8oz1ovACd21F3XB1qgNIA2fmRmi01mYAE03QASo38Rbls1viAPA1mdoWz3lusaC3UTxWV28AruQ1Qzdbx01mQJ008auyx2xI6jA2LuLGm2qBlCA1HNWC42xGY0f1qFYkH]]",
       note: "复制该消息，在一键辅助界面右下角点击【导入】，一键使用来自【夏亚丶】的方案。",
     },
     {
