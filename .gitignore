@@ -5,6 +5,13 @@ public/
 # Rendered design-review evidence
 .impeccable/
 
+# Archived authoring sources; retain locally and never publish
+local-source/
+
+# Optional Node tooling caches
+node_modules/
+npm-debug.log*
+
 # Local content source and design/planning working files (never upload to git)
 *.docx
 assets/*.png

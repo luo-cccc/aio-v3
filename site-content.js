@@ -535,6 +535,33 @@ window.SITE_CONTENT = Object.freeze({
       },
     },
   ],
+  comboBranches: [
+    {
+      "id": "pvp",
+      "title": "PVP 连招码",
+      "description": "玩家对战使用的实测连招会在这里单独归档，并标注适用版本与最后测试时间。"
+    },
+    {
+      "id": "pvp-hammer",
+      "title": "PVP · 锤子",
+      "description": "专门归档 PVP 锤子方案，方便在玩家对战中切换锤子技能组时快速导入。"
+    },
+    {
+      "id": "pve",
+      "title": "PVE 连招码",
+      "description": "PVE 场景使用的实测连招会在这里单独归档，并标注适用版本与最后测试时间。"
+    },
+    {
+      "id": "pve-hammer",
+      "title": "PVE · 锤子",
+      "description": "专门归档 PVE 锤子方案，方便在需要切换锤子技能组时快速导入。"
+    },
+    {
+      "id": "gvg-small-account",
+      "title": "小号 GVG · 烧尸体",
+      "description": "专门归档小号 GVG 烧尸体方案，适合装备与属性仍在成型中的歌颂者。"
+    }
+  ],
   combos: [
     {
       id: "pvp-combo-ready",
@@ -547,6 +574,16 @@ window.SITE_CONTENT = Object.freeze({
       note: "复制该消息，在一键辅助界面右下角点击【导入】，一键使用来自【夏亚丶】的方案。",
       guideId: "field-manual",
       videoId: "singer-pvp-gvg-guide",
+    },
+    {
+      id: "pvp-hammer-combo-ready",
+      branch: "pvp-hammer",
+      title: "PVP 锤子连招码｜夏亚丶方案",
+      scenario: "一键辅助：惩戒、人脉技能、秘偶技能、飓风斧等。",
+      version: "PVP 锤子",
+      updated: "2026年10月22日发布｜待补充核验日期",
+      code: "[[2O9amp0000002R1N0y0Kmyp13BSLuj4Dwcnt1TDNDV2ild8L4CjokW3Ps9XM3Kgs0v1qFibL2rlz0U1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otPK2fHNG32fmZLV2OMEJ128AruQ1Qzdbx031sl128AruQ1TGQz31zpwEU37JDFc1viAP81mcRWc38Rbls1viAPA1mdoWz0NLvCM1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otOW2fDH8b1ovACd21F3XB1qgP0D1ovACd21FbdK1mcYWD0aqdow2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zNcCP2fmRmi01mgMU1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otPK2fHNG32fmZLW2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zQMgj2fmAjr01mgMU1CF3Pd22WELp20CslH1CF3Pd22WEU525rsMw05otPA2fHNFx2fq8qg2OMEJ128AruQ1Qzdbx01tUEl28AruQ1TGQz320fl7w1zI7Dl2foeF603PtPm37JDFc1viAP81mcRWb38Rbls1viAPA1mdoWz3lusaC3UNAdm08auyx2gLfer1ovACd21F3XB1qgP0D1ovACd21FbdK1mcYWD0aoYcb2gPtbe03QAQk2fnwSf1vDyQg3BSLuj4Dwcnt1TDNDV2ildun]]",
+      note: "复制该消息，在一键辅助界面右下角点击【导入】，一键使用来自【夏亚丶】的方案。",
     },
     {
       id: "pve-combo-ready",

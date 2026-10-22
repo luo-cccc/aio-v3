@@ -1,178 +1,28 @@
-import { copyFile, mkdir, readFile, readdir, rm, stat } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, extname, join, relative, resolve } from "node:path";
-import { spawnSync } from "node:child_process";
-
-const scriptDirectory = dirname(fileURLToPath(import.meta.url));
-const projectRoot = resolve(scriptDirectory, "..");
-const outputFlagIndex = process.argv.indexOf("--output");
-const requestedOutput = outputFlagIndex === -1 ? "public" : process.argv[outputFlagIndex + 1];
-
-if (outputFlagIndex !== -1 && !requestedOutput) {
-  throw new Error("--output requires a child directory of the project root.");
-}
-
-const outputDirectory = resolve(projectRoot, requestedOutput || "public");
-const outputRelativePath = relative(projectRoot, outputDirectory);
-
-if (!outputRelativePath || outputRelativePath.startsWith("..") || /^[\\/]/.test(outputRelativePath)) {
-  throw new Error(`Output directory must be a child of the project root: ${projectRoot}`);
-}
-
-const publishFiles = [
-  "index.html",
-  "guides.html",
-  "combos.html",
-  "calculator.html",
-  "videos.html",
-  "about.html",
-  "guide-singer-pvp-gvg.html",
-  "guide-singer-pvp-gvg-09-21.html",
-  "guide-singer-sequence7-gvg-10-12.html",
-  "guide-singer-strategic-server.html",
-  "guide-singer-pve-09-15.html",
-  "guide-singer-pve.html",
-  "app.js",
-  "calculator.js",
-  "site-content.js",
-  "styles.css",
-  "calculator.css",
-  "_headers",
-  "robots.txt",
-];
-
-const publishAssets = [
-  "laoluo-avatar.jpg",
-  "singer-pvp-gvg-character.webp",
-  "singer-pvp-gvg-skills.webp",
-  "singer-pvp-gvg-sealed-artifacts.webp",
-  "singer-pvp-gvg-marionettes.webp",
-  "singer-pvp-gvg-talents.webp",
-  "singer-sequence8-pvp-gvg-01.webp",
-  "singer-sequence8-pvp-gvg-02.webp",
-  "singer-sequence8-pvp-gvg-03.webp",
-  "singer-sequence8-pvp-gvg-04.webp",
-  "singer-sequence8-pvp-gvg-05.webp",
-  "singer-sequence8-pvp-gvg-06.webp",
-  "singer-sequence8-pvp-gvg-07.webp",
-  "singer-sequence8-pvp-gvg-09-21-equipment.webp",
-  "singer-sequence8-pvp-gvg-09-21-skills.webp",
-  "singer-sequence8-pvp-gvg-09-21-artifacts.webp",
-  "singer-sequence8-pvp-gvg-09-21-battle-record.webp",
-  "singer-sequence8-pvp-gvg-09-21-marionettes.webp",
-  "singer-sequence8-pvp-gvg-09-21-talents.webp",
-  "singer-sequence7-gvg-10-12-battle-1.webp",
-  "singer-sequence7-gvg-10-12-battle-2.webp",
-  "singer-sequence7-gvg-10-12-battle-record.webp",
-  "singer-sequence7-gvg-10-12-attributes.webp",
-  "singer-sequence7-gvg-10-12-equipment.webp",
-  "singer-sequence7-gvg-10-12-skills.webp",
-  "singer-sequence7-gvg-10-12-talents.webp",
-  "singer-sequence7-gvg-10-12-marionettes.webp",
-  "singer-sequence8-strategy-09-15-1.webp",
-  "singer-sequence8-strategy-09-15-2.webp",
-  "singer-sequence8-strategy-09-15-3.webp",
-  "singer-sequence8-strategy-09-15-4.webp",
-  "singer-sequence8-pve-09-15-1.webp",
-  "singer-sequence8-pve-09-15-2.webp",
-  "singer-sequence8-pve-09-15-3.webp",
-  "singer-sequence8-pve-09-15-4.webp",
-  "singer-sequence8-pve-09-07-01.webp",
-  "singer-sequence8-pve-09-07-02.webp",
-  "singer-sequence8-pve-09-07-03.webp",
-  "singer-sequence8-pve-09-07-04.webp",
-  "singer-sequence8-pve-09-07-05.webp",
-  "singer-pve-character.webp",
-  "singer-pve-skills.webp",
-  "singer-pve-sealed-artifacts.webp",
-  "singer-pve-marionettes.webp",
-  "singer-pve-talents.webp",
-];
-
-const publishData = ["attribute-formulas.json"];
-
-const sourcePath = (...segments) => join(projectRoot, ...segments);
-const releasePath = (...segments) => join(outputDirectory, ...segments);
-
-async function requireFile(filePath) {
-  const details = await stat(filePath).catch(() => null);
-  if (!details?.isFile()) throw new Error(`Required source file is missing: ${filePath}`);
-}
-
-async function listFiles(directory) {
-  const entries = await readdir(directory, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const filePath = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await listFiles(filePath));
-    else if (entry.isFile()) files.push(filePath);
-  }
-  return files;
-}
-
-function validateJavaScript(relativeFile) {
-  const result = spawnSync(process.execPath, ["--check", releasePath(relativeFile)], { encoding: "utf8" });
-  if (result.status !== 0) {
-    throw new Error(`JavaScript syntax check failed for ${relativeFile}:\n${result.stderr || result.stdout}`);
-  }
-}
-
-async function validateRelease() {
-  const requiredReleaseFiles = [
-    ...publishFiles,
-    ...publishAssets.map((asset) => join("assets", asset)),
-    ...publishData.map((dataFile) => join("data", dataFile)),
-  ];
-
-  await Promise.all(requiredReleaseFiles.map((file) => requireFile(releasePath(file))));
-  validateJavaScript("app.js");
-  validateJavaScript("calculator.js");
-  validateJavaScript("site-content.js");
-  JSON.parse(await readFile(releasePath("data", "attribute-formulas.json"), "utf8"));
-
-  const files = await listFiles(outputDirectory);
-  const forbiddenExtensions = new Set([".docx", ".md", ".ps1", ".mjs", ".tmp"]);
-  const forbiddenFiles = files.filter((file) => forbiddenExtensions.has(extname(file).toLowerCase()));
-  if (forbiddenFiles.length) {
-    throw new Error(`Release package contains non-deployable files:\n${forbiddenFiles.join("\n")}`);
-  }
-
-  const textFiles = files.filter((file) => [".html", ".js", ".css", ".json"].includes(extname(file).toLowerCase()));
-  for (const file of textFiles) {
-    const text = await readFile(file, "utf8");
-    if (/C:\\Users\\|file:\/\//i.test(text)) {
-      throw new Error(`Release package exposes a local path: ${file}`);
-    }
-  }
-
-  const totalBytes = (await Promise.all(files.map(async (file) => (await stat(file)).size)))
-    .reduce((sum, size) => sum + size, 0);
-  return { files, totalBytes };
-}
+import { copyFile, mkdir, rm, stat } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { checkRepository, projectRoot, readManifest, resolveOutputDirectory } from "./lib/repository.mjs";
 
 async function buildRelease() {
-  await Promise.all([
-    ...publishFiles.map((file) => requireFile(sourcePath(file))),
-    ...publishAssets.map((asset) => requireFile(sourcePath("assets", asset))),
-    ...publishData.map((dataFile) => requireFile(sourcePath("data", dataFile))),
-  ]);
+  const args = process.argv.slice(2);
+  if (args.length && (args.length !== 2 || args[0] !== "--output" || !args[1])) {
+    throw new Error("Usage: node scripts/build-public.mjs [--output public|.tmp/releases/<name>]");
+  }
+  const output = await resolveOutputDirectory(args[1]);
+  const manifest = await readManifest();
+  const { files } = await checkRepository(projectRoot, manifest);
 
-  await rm(outputDirectory, { recursive: true, force: true });
-  await mkdir(releasePath("assets"), { recursive: true });
-  await mkdir(releasePath("data"), { recursive: true });
-
-  await Promise.all(publishFiles.map((file) => copyFile(sourcePath(file), releasePath(file))));
-  await Promise.all(publishAssets.map((asset) => copyFile(sourcePath("assets", asset), releasePath("assets", asset))));
-  await Promise.all(publishData.map((dataFile) => copyFile(sourcePath("data", dataFile), releasePath("data", dataFile))));
-
-  const { files, totalBytes } = await validateRelease();
-  const manifest = files
-    .map((file) => relative(outputDirectory, file))
-    .sort((left, right) => left.localeCompare(right));
-
-  console.log(`Release package ready: ${outputDirectory}`);
-  console.log(`Validated ${manifest.length} files (${(totalBytes / 1024 / 1024).toFixed(2)} MB).`);
-  manifest.forEach((file) => console.log(file));
+  // The output path is restricted and all sources are checked before replacement.
+  await rm(output, { recursive: true, force: true });
+  for (const file of files) {
+    const destination = join(output, file);
+    await mkdir(dirname(destination), { recursive: true });
+    await copyFile(join(projectRoot, file), destination);
+  }
+  await checkRepository(output, manifest);
+  const totalBytes = (await Promise.all(files.map(async (file) => (await stat(join(output, file))).size)))
+    .reduce((sum, size) => sum + size, 0);
+  console.log(`Release package ready: ${output}`);
+  console.log(`Validated ${files.length} files (${(totalBytes / 1024 / 1024).toFixed(2)} MB).`);
 }
 
 buildRelease().catch((error) => {

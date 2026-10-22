@@ -1,78 +1,79 @@
 # 老洛MMO攻略站
 
-这是一个可直接发布到 Cloudflare Pages 的静态网站，服务于《诡秘之主》歌颂者 PVP / GVG / PVE 图文攻略、一键连招码、属性计算和往期视频外链。
+面向《诡秘之主》歌颂者玩家的个人攻略静态站，提供 PVP / GVG / PVE 图文攻略、一键连招码、属性计算和原平台视频链接。
 
-## 本地预览
+原生 HTML、CSS、JavaScript，无后端和数据库。Node.js 20 或以上用于校验与构建，无第三方 npm 依赖，无需执行 `npm install`。
 
-在该目录执行：
+## 快速开始
 
 ```powershell
-python -m http.server 4173 --bind 127.0.0.1
+npm run check
+npm test
+npm run build
+python -m http.server 4173 --bind 127.0.0.1 --directory public
 ```
 
-然后访问 `http://127.0.0.1:4173/`。
+访问 <http://127.0.0.1:4173/>。Python 只用于这里的本地预览；构建只需要 Node.js。
 
-也可以直接双击 `index.html` 打开；已发布攻略的同目录图文链接支持本地文件预览。使用本地服务器更接近正式部署环境。
+也可以直接打开根目录 `index.html` 查看源码页面；同目录攻略链接支持本地文件预览。验收发布效果时以构建后的 `public/` 为准。
 
 ## 最新更新
 
-### 2026-10-13
+### 2026-10-22
 
-- 更新 PVP 与 PVE 锤子一键连招码，替换为夏亚丶最新方案，并同步对应技能说明；PVE 锤子方案已按最新完整代码重新覆盖。
+- 新增独立的 PVP 锤子一键连招栏目，支持复制夏亚丶方案，附惩戒、人脉技能、秘偶技能、飓风斧等技能说明与导入指引。
+- 补齐禁用 JavaScript 时首页和攻略列表中的战略服、9 月 15 日 PVE 攻略入口，并统一连招分类顺序。
 
 完整记录见 [更新记录](docs/releases/release-notes.md)。
 
+## 维护入口
 
-## 更新内容
+| 任务 | 位置 |
+| --- | --- |
+| 修改攻略、连招码、视频、个人资料 | `site-content.js` |
+| 新增或调整连招分类 | `site-content.js` → `comboBranches` |
+| 修改页面模板、导航、复制交互 | `app.js` |
+| 修改全站样式 | `styles.css` |
+| 修改计算器 | `calculator.html`、`calculator.js`、`calculator.css` |
+| 核对公式来源和边界 | `data/attribute-formulas.json` |
+| 新增发布文件或图片 | `scripts/publish-manifest.json` |
+| 记录用户可见更新 | `docs/releases/release-notes.md` 与本页最新更新 |
 
-所有需要日常更新的内容集中在 `site-content.js`：
+HTML 内保留了无 JavaScript 时的静态副本。更新内容后需同步对应 `<noscript>` 区域；校验会检查列表收录与连招码一致性。完整流程、关联字段和架构说明见 [仓库维护指南](docs/maintenance.md)。
 
-- `platforms`：填入各平台主页的完整 `https://` 链接。
-- `version`：填入适用阶段、官方版本信息和最后核验日期。
-- `guides`：新增或更新图文攻略条目。
-- `combos`：按 `branch: "pvp"`、`branch: "pve"`、`branch: "pve-hammer"` 或 `branch: "gvg-small-account"` 填入实测连招码；填写后复制按钮会自动启用。
-- `videos`：填入原平台的完整 `https://` 视频地址。
+## 目录职责
 
-条目之间可选的关联字段也已预留：攻略可使用 `url`、`comboIds`、`videoIds`；连招码可使用 `guideId`、`videoId`；视频可使用 `guideId`、`comboIds`。只有关联内容真实可用时，页面才会显示对应入口。
+```text
+*.html                 12 个页面入口及静态副本
+app.js / styles.css    共用页面渲染、交互和样式
+site-content.js        内容数据与连招分类
+calculator.*           独立属性计算器
+data/                  公开的公式资料
+assets/                当前使用的配图与头像
+  archive/             历史配图，保留在 Git 中，不发布
+scripts/               构建、发布清单、校验和测试
+docs/                  维护指南与更新记录
+public/                自动生成的发布包，不进入 Git
+local-source/          本机原始文档、PNG 和早期方案，不进入 Git
+.tmp/ / .impeccable/    本地临时工作与设计资料，不进入 Git
+```
 
-## 属性计算器
-
-`calculator.html` 是独立的属性收益与伤害估算工具，不依赖后端或第三方脚本。它支持两种口径、五类目标、词条即时比较、技能系数反推、实测校准和一键重置；计算器默认不保存输入，刷新页面会回到初始值。
-
-- `calculator.js`：计算公式、状态联动和输入交互。
-- `calculator.css`：仅作用于计算器页面的样式，避免影响其他攻略页面。
-- `data/attribute-formulas.json`：公开的公式与核验边界资料；已移除原始本机文件路径。
+计算器支持属性收益比较、自定义技能系数、五类目标、系数反推、实测校准和重置。输入不持久保存，刷新后回到初始值。
 
 ## 发布到 Cloudflare Pages
 
-发布包位于 `public/`，只包含网站运行所需的 HTML、CSS、JavaScript、`_headers`、公开的公式资料与 WebP 图片。不要上传项目根目录；根目录包含的 Word 成品、原始截图和设计资料已由 `.gitignore` 排除，不会进入版本库。
+Git 仓库：<https://github.com/luo-cccc/aio-v3.git>，生产分支为 `master`。
 
-项目使用 Git 仓库（origin：`https://github.com/luo-cccc/aio-v3.git`，默认分支 `master`）。
+- 构建命令：`node scripts/build-public.mjs`
+- 输出目录：`public`
+- Root directory：留空
 
-1. 执行 `powershell -ExecutionPolicy Bypass -File .\scripts\build-public.ps1` 生成并校验发布包。
-2. Cloudflare Pages 的 Git 集成自动部署：生产分支设为 `master`，构建命令设为 `node scripts/build-public.mjs`，输出目录设为 `public`，Root directory 留空。
-3. 若采用 Direct Upload 手动上传：只将整个 `public/` 文件夹拖入 Cloudflare Pages。
-4. 发布后，在 Pages 的自定义域名设置中绑定你的域名。
+Windows 原有入口仍可用：
 
-详细的部署选择、Cloudflare 配置和发布后检查见 [DEPLOYMENT.md](DEPLOYMENT.md)。发布前核对：游戏官网版本或适用阶段、最后核验日期、平台和视频外链、图文/连招码关联入口，以及 `public/` 内不含源文档或临时文件。
-
-## 文件结构
-
-```text
-index.html          首页
-guides.html         PVP / GVG / PVE 攻略页
-combos.html         一键连招码页
-calculator.html     属性计算器页
-videos.html         往期视频外链页
-about.html          关于 / 合作页
-site-content.js     可替换内容数据
-styles.css          全站样式
-app.js              页面渲染与交互
-calculator.css      计算器页面样式（隔离）
-calculator.js       计算器公式与交互
-data/               公开的公式资料
-assets/             本地品牌资产与原始截图
-scripts/            发布包构建脚本
-public/             可直接上传到 Cloudflare Pages 的发布包
-DEPLOYMENT.md        Cloudflare 部署与验收清单
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\build-public.ps1
 ```
+
+手动上传时仅上传 `public/`。构建会校验源文件和产物，源码、原始资料、归档图片和临时文件不进入发布包。
+
+部署设置和上线验收见 [Cloudflare 发布说明](DEPLOYMENT.md)。

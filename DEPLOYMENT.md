@@ -6,12 +6,15 @@
 | --- | --- | --- |
 | 根目录 HTML、JS、CSS、`assets/`、`data/` | 可维护的站点源文件 | 否，先构建 |
 | `scripts/build-public.mjs` | 跨平台构建与发布包校验 | Git 集成时由 Cloudflare 运行 |
+| `scripts/publish-manifest.json` | 页面、图片与数据的发布白名单 | 仅构建使用 |
 | `public/` | 已验证、可直接部署的静态产物 | 是，仅上传此目录 |
-| Word 文档、方案 Markdown、`.impeccable/`、`.tmp/` | 内容源、设计资料与本地缓存 | 否 |
+| `local-source/`、`assets/archive/`、`.impeccable/`、`.tmp/` | 原始资料、历史配图、设计资料与本地缓存 | 否 |
 
-`public/` 当前只包含运行所需的页面、脚本、样式、图片、公式资料和 `_headers`。构建会验证 JavaScript、公式 JSON、清单完整性、无本机路径和无 Word / Markdown / 临时文件。
+`public/` 当前只包含运行所需的页面、脚本、样式、图片、公式资料和 `_headers`。构建按明确的文件白名单打包，先检查源码，再生成并检查产物；校验包括 JavaScript、公式 JSON、图片/页面引用、内容关联、连招码格式与静态副本，以及本机路径暴露。
 
 ## 构建
+
+需要 Node.js 20 或以上，无需安装 npm 依赖。构建前可执行 `npm run check`；修改构建或校验逻辑后执行 `npm test`。
 
 Windows 本地：
 
@@ -25,7 +28,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build-public.ps1
 node .\scripts\build-public.mjs
 ```
 
-构建成功后，只使用 `public/` 进行部署。
+构建成功后，只使用 `public/` 进行部署。可用 `python -m http.server 4173 --bind 127.0.0.1 --directory public` 在本地验收。
+
+自定义临时输出仅支持 `node scripts/build-public.mjs --output .tmp/releases/preview` 这种 `.tmp/releases/<name>` 路径；构建会替换输出目录，勿在其中保存手工文件。
 
 ## 部署方式
 

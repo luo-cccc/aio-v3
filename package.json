@@ -1,0 +1,11 @@
+{
+  "name": "laoluo-mmo-guides",
+  "private": true,
+  "description": "老洛MMO歌颂者攻略静态站",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test scripts/tests/repository.test.mjs",
+    "build": "node scripts/build-public.mjs"
+  }
+}
