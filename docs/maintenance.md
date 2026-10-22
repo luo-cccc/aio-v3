@@ -2,7 +2,7 @@
 
 ## 当前架构
 
-这是原生 HTML、CSS、JavaScript 多页面静态站，无后端、数据库和运行时包依赖。Node.js 20 或以上只用于本地校验、测试和生成 Cloudflare Pages 发布包。
+这是原生 HTML、CSS、JavaScript 多页面静态站，无后端、数据库和运行时包依赖。Node.js 20 或以上用于本地校验、测试和生成发布包；正式网站由 Cloudflare Workers Static Assets 托管。
 
 当前包含 12 个页面入口：6 个栏目页和 6 篇独立攻略；内容数据包含 6 篇攻略、5 条连招和 6 条视频外链。视频外链包含同一作品的不同平台版本。
 
@@ -18,6 +18,7 @@ data/                  随站点公开的公式参考资料
 assets/                当前使用的头像与攻略配图
 assets/archive/        历史配图；纳入 Git，不发布
 scripts/               构建入口、发布清单、校验工具及其回归测试
+wrangler.jsonc         Workers 部署配置，静态目录固定为 ./public
 docs/                  维护指南与按日期归档的更新记录
 public/                构建生成的发布包；不纳入 Git
 local-source/          本机 Word、原始 PNG、早期方案；不纳入 Git
@@ -69,7 +70,7 @@ python -m http.server 4173 --bind 127.0.0.1 --directory public
 3. 调整了构建或校验逻辑时执行 `npm test`。
 4. 执行 `npm run build`，再预览 `public/`，检查桌面和手机布局、复制、攻略跳转及计算器输入。
 5. 用户可见变更写入 `docs/releases/release-notes.md`，同一天合并；README 只保留最新日期记录。纯内部整理不单独编造用户功能更新。
-6. 发布仅使用 `public/`。Cloudflare 设置见根目录 `DEPLOYMENT.md`。
+6. 发布仅使用 `public/`。推送后确认 Workers Builds 检查成功并核对正式网站；Git 推送成功不代表部署成功。Cloudflare 设置见根目录 `DEPLOYMENT.md`。
 
 ## 构建边界
 

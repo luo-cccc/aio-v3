@@ -8,6 +8,12 @@ const content = parseContent(await readFile(join(projectRoot, "site-content.js")
 const manifest = await readManifest();
 const files = publishPaths(manifest);
 
+test("Workers deploys only the generated public directory", async () => {
+  const config = JSON.parse(await readFile(join(projectRoot, "wrangler.jsonc"), "utf8"));
+  assert.equal(config.name, "aio-v3");
+  assert.equal(config.assets.directory, "./public");
+});
+
 test("all current content, including PVP hammer, resolves to published resources", () => {
   validateContent(content, files);
 });

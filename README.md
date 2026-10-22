@@ -23,6 +23,7 @@ python -m http.server 4173 --bind 127.0.0.1 --directory public
 
 - 新增独立的 PVP 锤子一键连招栏目，支持复制夏亚丶方案，附惩戒、人脉技能、秘偶技能、飓风斧等技能说明与导入指引。
 - 补齐禁用 JavaScript 时首页和攻略列表中的战略服、9 月 15 日 PVE 攻略入口，并统一连招分类顺序。
+- 修复自动部署失败，确保新增内容能发布到正式网站。
 
 完整记录见 [更新记录](docs/releases/release-notes.md)。
 
@@ -60,13 +61,16 @@ local-source/          本机原始文档、PNG 和早期方案，不进入 Git
 
 计算器支持属性收益比较、自定义技能系数、五类目标、系数反推、实测校准和重置。输入不持久保存，刷新后回到初始值。
 
-## 发布到 Cloudflare Pages
+## 发布到 Cloudflare Workers
+
+正式网站：<https://zephyr-eyes.com/>。当前使用 Cloudflare Workers Static Assets，Worker 名称为 `aio-v3`。
 
 Git 仓库：<https://github.com/luo-cccc/aio-v3.git>，生产分支为 `master`。
 
 - 构建命令：`node scripts/build-public.mjs`
-- 输出目录：`public`
-- Root directory：留空
+- 部署命令：`npx wrangler deploy`
+- 静态资源目录：由 `wrangler.jsonc` 明确指定 `./public`
+- 根目录：仓库根目录 `/`
 
 Windows 原有入口仍可用：
 
@@ -74,6 +78,6 @@ Windows 原有入口仍可用：
 powershell -ExecutionPolicy Bypass -File .\scripts\build-public.ps1
 ```
 
-手动上传时仅上传 `public/`。构建会校验源文件和产物，源码、原始资料、归档图片和临时文件不进入发布包。
+构建会校验源文件和产物；部署仅使用 `public/`，源码、原始资料、归档图片和临时文件不进入发布包。推送后需确认 Cloudflare 的构建及部署均成功，再检查正式网站。
 
 部署设置和上线验收见 [Cloudflare 发布说明](DEPLOYMENT.md)。

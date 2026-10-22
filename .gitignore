@@ -11,6 +11,7 @@ local-source/
 # Optional Node tooling caches
 node_modules/
 npm-debug.log*
+.wrangler/
 
 # Local content source and design/planning working files (never upload to git)
 *.docx
